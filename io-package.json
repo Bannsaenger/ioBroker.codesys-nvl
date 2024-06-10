@@ -1,0 +1,99 @@
+{
+	"common": {
+		"name": "codesys-nvl",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "CODESYS Network Varible List",
+		"titleLang": {
+			"en": "CODESYS Network Varible List",
+			"de": "CODESYS Network Varible List",
+			"ru": "CODESYS Network Varible List",
+			"pt": "CODESYS Network Varible List",
+			"nl": "CODESYS Network Varible List",
+			"fr": "CODESYS Network Varible List",
+			"it": "CODESYS Network Varible List",
+			"es": "CODESYS Network Varible List",
+			"pl": "CODESYS Network Varible List",
+			"zh-cn": "CODESYS Network Varible List"
+		},
+		"desc": {
+			"en": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
+			"de": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
+			"ru": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
+			"pt": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
+			"nl": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
+			"fr": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
+			"it": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
+			"es": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
+			"pl": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
+			"zh-cn": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC"
+		},
+		"authors": ["Bannsaenger <bannsaenger@gmx.de>"],
+		"keywords": ["codesys nvl plc iec-61131-3"],
+		"license": "MIT",
+		"platform": "Javascript/Node.js",
+		"main": "main.js",
+		"icon": "codesys-nvl.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/Bannsaenger/ioBroker.codesys-nvl/main/admin/codesys-nvl.png",
+		"readme": "https://github.com/Bannsaenger/ioBroker.codesys-nvl/blob/main/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "hardware",
+		"compact": true,
+		"connectionType": "local",
+		"dataSource": "push",
+		"adminUI": {
+			"config": "json"
+		},
+		"eraseOnUpload": true,
+		"dependencies": [
+			{
+				"js-controller": ">=3.3.22"
+			}
+		],
+		"globalDependencies": [
+			{
+				"admin": ">=5.1.13"
+			}
+		]
+	},
+	"native": {},
+	"objects": [],
+	"instanceObjects": [
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": "Information"
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.connection",
+			"type": "state",
+			"common": {
+				"role": "indicator.connected",
+				"name": "Device or service connected",
+				"type": "boolean",
+				"read": true,
+				"write": false,
+				"def": false
+			},
+			"native": {}
+		}
+	]
+}
