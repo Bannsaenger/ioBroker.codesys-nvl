@@ -1,3 +1,13 @@
+/**
+ *
+ *      iobroker CoDeSys NVL Adapter V0.0.1 20240611
+ *
+ *      Copyright (c) 2024, Bannsaenger <bannsaenger@gmx.de>
+ *
+ *      MIT License
+ *
+ */
+
 "use strict";
 
 /*
