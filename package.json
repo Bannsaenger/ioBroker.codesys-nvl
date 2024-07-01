@@ -58,7 +58,7 @@
     "react": "^17.0.2",
     "sinon": "^18.0.0",
     "sinon-chai": "^3.7.0",
-    "typescript": "~4.6.4"
+    "typescript": "~5.5.2"
   },
   "main": "main.js",
   "files": [
