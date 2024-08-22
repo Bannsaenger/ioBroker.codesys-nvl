@@ -14,7 +14,11 @@
   "homepage": "https://github.com/Bannsaenger/ioBroker.codesys-nvl",
   "license": "MIT",
   "keywords": [
-    "codesys nvl plc iec-61131-3 ioBroker"
+    "ioBroker",
+    "codesys",
+    "nvl",
+    "plc",
+    "iec-61131-3"
   ],
   "repository": {
     "type": "git",
