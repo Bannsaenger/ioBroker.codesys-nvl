@@ -33,7 +33,7 @@ class CodesysNvl extends utils.Adapter {
 		this.on("unload", this.onUnload.bind(this));
 
 		// read Objects template for object generation
-		this.objectsTemplates = JSON.parse(fs.readFileSync(__dirname + '/lib/objects_templates.json', 'utf8'));
+		this.objectsTemplates = JSON.parse(fs.readFileSync(__dirname + '/lib/object_templates.json', 'utf8'));
 		// holds alls data from the gvl files in the directory
 		this.nvlFileBase = {};
 
@@ -89,7 +89,9 @@ class CodesysNvl extends utils.Adapter {
 			this.subscribeStates('*');
 
 			// try to open open configured server port
+			// @ts-ignore
 			this.log.info('Codesys-NVL bind UDP socket to: "' + this.config.bind + ':' + this.config.port + '"');
+			// @ts-ignore
 			this.server.bind(this.config.port, this.config.bind);
 		}
 	}

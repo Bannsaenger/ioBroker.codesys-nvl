@@ -46,7 +46,11 @@
 		},
 		"authors": ["Bannsaenger <bannsaenger@gmx.de>"],
 		"keywords": ["codesys nvl plc iec-61131-3"],
-		"license": "MIT",
+		"licenseInformation": {
+			"link": "https://github.com/Bannsaenger/ioBroker.extron/blob/master/LICENSE",
+			"type": "free",
+			"license": "MIT"
+		},
 		"platform": "Javascript/Node.js",
 		"main": "main.js",
 		"icon": "codesys-nvl.png",
@@ -57,6 +61,7 @@
 		"loglevel": "info",
 		"mode": "daemon",
 		"type": "hardware",
+		"tier": 3,
 		"compact": true,
 		"connectionType": "local",
 		"dataSource": "push",
@@ -66,12 +71,12 @@
 		"eraseOnUpload": true,
 		"dependencies": [
 			{
-				"js-controller": ">=3.3.22"
+				"js-controller": ">=5.0.19"
 			}
 		],
 		"globalDependencies": [
 			{
-				"admin": ">=5.1.13"
+				"admin": ">=5.3.2"
 			}
 		]
 	},
