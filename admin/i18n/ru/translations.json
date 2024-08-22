@@ -1,3 +1,20 @@
 {
-	"codesys-nvl adapter settings": "Настройки адаптера для codesys-nvl"
+    "codesys-nvl adapter settings": "Настройки адаптера для codesys-nvl",
+    "options": "параметры",
+    "IP": "ИП",
+    "IP address to bind the port to": "IP-адрес для привязки порта",
+    "Port": "Порт",
+    "listen at this UDP port": "прослушивать этот UDP-порт",
+    "nvl": "Списки сетевых переменных",
+    "Main timer interval": "Основной интервал таймера",
+    "Resolution of all timer based cyclic transmissions and minimum gap delays (in ms)": "Разрешение всех циклических передач на основе таймера и минимальные задержки (в мс)",
+    "List Identifier": "Идентификатор списка",
+    "Usage of list: Disabled|Send|Receive": "Использование списка: Отключено|Отправить|Получить",
+    "Checksum": "Контрольная сумма",
+    "Acknowledge": "Сознавать",
+    "Cyclic Transmission": "Циклическая передача",
+    "Transmission On Change": "Передача при изменении",
+    "Transmission On Event": "Передача по событию",
+    "interval between cyclic transmissions": "интервал между циклическими передачами",
+    "minimum gap between nvl sends": "минимальный разрыв между посылами nvl"
 }

@@ -1,3 +1,20 @@
 {
-	"codesys-nvl adapter settings": "Ajustes del adaptador para codesys-nvl"
+    "codesys-nvl adapter settings": "Configuración del adaptador para codesys-nvl",
+    "options": "opciones",
+    "IP": "IP",
+    "IP address to bind the port to": "Dirección IP para vincular el puerto",
+    "Port": "Puerto",
+    "listen at this UDP port": "escuchar en este puerto UDP",
+    "nvl": "Listas de variables de red",
+    "Main timer interval": "Intervalo del temporizador principal",
+    "Resolution of all timer based cyclic transmissions and minimum gap delays (in ms)": "Resolución de todas las transmisiones cíclicas basadas en temporizadores y retrasos de espacio mínimos (en ms)",
+    "List Identifier": "Identificador de lista",
+    "Usage of list: Disabled|Send|Receive": "Uso de la lista: Desactivado|Enviar|Recibir",
+    "Checksum": "Suma de comprobación",
+    "Acknowledge": "Reconocer",
+    "Cyclic Transmission": "Transmisión cíclica",
+    "Transmission On Change": "Transmisión al cambiar",
+    "Transmission On Event": "Transmisión en evento",
+    "interval between cyclic transmissions": "intervalo entre transmisiones cíclicas",
+    "minimum gap between nvl sends": "brecha mínima entre envíos nvl"
 }

@@ -1,3 +1,20 @@
 {
-	"codesys-nvl adapter settings": "codesys-nvl的适配器设置"
+    "codesys-nvl adapter settings": "codesys-nvl 的适配器设置",
+    "options": "选项",
+    "IP": "知识产权",
+    "IP address to bind the port to": "端口绑定的IP地址",
+    "Port": "港口",
+    "listen at this UDP port": "监听这个UDP端口",
+    "nvl": "网络变量列表",
+    "Main timer interval": "主定时器间隔",
+    "Resolution of all timer based cyclic transmissions and minimum gap delays (in ms)": "所有基于定时器的循环传输和最小间隙延迟的分辨率（以毫秒为单位）",
+    "List Identifier": "列表标识符",
+    "Usage of list: Disabled|Send|Receive": "列表的用法：禁用|发送|接收",
+    "Checksum": "校验和",
+    "Acknowledge": "承认",
+    "Cyclic Transmission": "循环传输",
+    "Transmission On Change": "传输变化",
+    "Transmission On Event": "事件传输",
+    "interval between cyclic transmissions": "循环传输之间的间隔",
+    "minimum gap between nvl sends": "nvl 发送之间的最小间隙"
 }

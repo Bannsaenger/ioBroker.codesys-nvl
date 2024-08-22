@@ -1,0 +1,128 @@
+{
+	"nvl": {
+		"_id": "0",
+		"type": "device",
+		"common": {
+			"name": "Put nvl name here"
+		},
+		"native": {}
+	},
+	"nvls": [
+		{
+			"_id": "config",
+			"type": "channel",
+			"common": {
+				"name": "basics for nvl"
+			},
+			"native": {}
+		},
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": "Information"
+			},
+			"native": {}
+		},
+		{
+			"_id": "var",
+			"type": "folder",
+			"common": {
+				"name": "Variables of the nvl"
+			},
+			"native": {}
+		}
+	],
+	"config": [
+		{
+			"_id": "structure",
+			"type": "state",
+			"common": {
+				"role": "json",
+				"name": "the whole nvl structure",
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": ""
+			},
+			"native": {}
+		}
+	],
+	"info": [
+		{
+			"_id": "connection",
+			"type": "state",
+			"common": {
+				"role": "indicator.connected",
+				"name": "indicates that nvl is received. Goes to false if nvl ist configured to be sent periodically and is not seen for n times cyclicTransmissionInterval.",
+				"type": "boolean",
+				"read": true,
+				"write": false,
+				"def": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "lastReceived",
+			"type": "state",
+			"common": {
+				"role": "date",
+				"name": "time of last received nvl",
+				"type": "number",
+				"read": true,
+				"write": false,
+				"def": 0
+			},
+			"native": {}
+		}
+	],
+	"channel": {
+		"_id": "0",
+		"type": "channel",
+		"common": {
+			"name": "channel type variable"
+		},
+		"native": {}
+	},
+	"folder": {
+		"_id": "0",
+		"type": "folder",
+		"common": {
+			"name": "folder type variable"
+		},
+		"native": {}
+	},
+	"variables": {
+		"BOOL": {
+			"type": "channel"
+		}
+	},
+	"BOOL": [
+		{
+			"_id": "type",
+			"type": "state",
+			"common": {
+				"role": "text",
+				"name": "iec-61131-3 name of the value",
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": "BOOL"
+			},
+			"native": {}
+		},
+		{
+			"_id": "value",
+			"type": "state",
+			"common": {
+				"role": "indicator.state",
+				"name": "boolean value of the variable",
+				"type": "boolean",
+				"read": true,
+				"write": true,
+				"def": false
+			},
+			"native": {}
+		}
+	]
+}

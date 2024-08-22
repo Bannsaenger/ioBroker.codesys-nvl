@@ -1,5 +1,135 @@
 {
 	"i18n": true,
-	"type": "panel",
-	"items": {}
+	"type": "tabs",
+	"items": {
+		"_options": {
+			"type": "panel",
+			"label": "options",
+			"items": {
+				"bind": {
+					"type": "ip",
+					"listenOnAllPorts": true,
+					"onlyIp4": true,
+					"sm": 12,
+					"md": 6,
+					"lg": 4,
+					"label": "IP",
+					"help": "IP address to bind the port to"
+				},
+				"port": {
+					"type": "number",
+					"min": 1,
+					"max": 65565,
+					"sm": 12,
+					"md": 6,
+					"lg": 2,
+					"label": "Port",
+					"help": "listen at this UDP port"
+				},
+				"_divider": {
+					"type": "divider",
+					"newline": true
+				},
+				"mainTimerInterval": {
+					"type": "number",
+					"min": 10,
+					"max": 10000,
+					"sm": 12,
+					"md": 6,
+					"lg": 6,
+					"label": "Main timer interval",
+					"help": "Resolution of all timer based cyclic transmissions and minimum gap delays (in ms)"
+				}
+			}
+		},
+		"_nvl": {
+			"type": "panel",
+			"label": "nvl",
+			"items": {
+				"gvlInfo": {
+					"type": "table",
+					"sm": 12,
+					"md": 12,
+					"lg": 12,
+					"items": [
+						{
+							"type": "text",
+							"title": "File",
+							"attr": "fileName",
+							"disabled": "1==1",
+							"filter": false,
+							"sort": false,
+							"readOnly": true,
+							"noClearButton": true
+						},
+						{
+							"type": "number",
+							"title": "ListId",
+							"attr": "ListIdentifier",
+							"disabled": "1==1",
+							"tooltip": "List Identifier"
+						},
+						{
+							"type": "select",
+							"options": [
+								{ "label": "Disabled", "value": "disabled" },
+								{ "label": "Send", "value": "send" },
+								{ "label": "Receive", "value": "receive" }
+							],
+							"title": "Type",
+							"attr": "type",
+							"tooltip": "Usage of list: Disabled|Send|Receive"
+						},
+						{
+							"type": "checkbox",
+							"title": "Chk",
+							"attr": "Checksum",
+							"tooltip": "Checksum"
+						},
+						{
+							"type": "checkbox",
+							"title": "Ack",
+							"attr": "Acknowledge",
+							"tooltip": "Acknowledge"
+						},
+						{
+							"type": "checkbox",
+							"title": "Cycl",
+							"attr": "CyclicTransmission",
+							"tooltip": "Cyclic Transmission"
+						},
+						{
+							"type": "checkbox",
+							"title": "OnC",
+							"attr": "TransmissionOnChange",
+							"tooltip": "Transmission On Change"
+						},
+						{
+							"type": "checkbox",
+							"title": "OnE",
+							"attr": "TransmissionOnEvent",
+							"tooltip": "Transmission On Event"
+						},
+						{
+							"type": "number",
+							"min": 1,
+							"max": 1000000,
+							"title": "Interval",
+							"attr": "Interval",
+							"tooltip": "interval between cyclic transmissions"
+						},
+						{
+							"type": "number",
+							"min": 1,
+							"max": 1000000,
+							"title": "MinGap",
+							"attr": "MinGap",
+							"tooltip": "minimum gap between nvl sends"
+						}
+					],
+					"noDelete": true
+				}
+			}
+		}
+	}
 }

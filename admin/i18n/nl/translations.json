@@ -1,3 +1,20 @@
 {
-	"codesys-nvl adapter settings": "Adapterinstellingen voor codesys-nvl"
+    "codesys-nvl adapter settings": "Adapterinstellingen voor codesys-nvl",
+    "options": "opties",
+    "IP": "IK P",
+    "IP address to bind the port to": "IP-adres waaraan de poort moet worden gekoppeld",
+    "Port": "Haven",
+    "listen at this UDP port": "luister op deze UDP-poort",
+    "nvl": "Lijsten met netwerkvariabelen",
+    "Main timer interval": "Hoofdtimerinterval",
+    "Resolution of all timer based cyclic transmissions and minimum gap delays (in ms)": "Resolutie van alle op timer gebaseerde cyclische transmissies en minimale vertragingen (in ms)",
+    "List Identifier": "Lijst-ID",
+    "Usage of list: Disabled|Send|Receive": "Gebruik van lijst: Uitgeschakeld|Verzenden|Ontvangen",
+    "Checksum": "Controlesom",
+    "Acknowledge": "Erkennen",
+    "Cyclic Transmission": "Cyclische transmissie",
+    "Transmission On Change": "Verzending bij verandering",
+    "Transmission On Event": "Transmissie bij gebeurtenis",
+    "interval between cyclic transmissions": "interval tussen cyclische transmissies",
+    "minimum gap between nvl sends": "minimale kloof tussen nvl-verzendingen"
 }

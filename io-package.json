@@ -13,33 +13,36 @@
 				"it": "Versione iniziale",
 				"es": "Versión inicial",
 				"pl": "Pierwsze wydanie",
-				"zh-cn": "首次出版"
+				"zh-cn": "首次出版",
+				"uk": "початковий випуск"
 			}
 		},
-		"title": "CODESYS Network Varible List",
+		"title": "CODESYS Network Variable List",
 		"titleLang": {
-			"en": "CODESYS Network Varible List",
-			"de": "CODESYS Network Varible List",
-			"ru": "CODESYS Network Varible List",
-			"pt": "CODESYS Network Varible List",
-			"nl": "CODESYS Network Varible List",
-			"fr": "CODESYS Network Varible List",
-			"it": "CODESYS Network Varible List",
-			"es": "CODESYS Network Varible List",
-			"pl": "CODESYS Network Varible List",
-			"zh-cn": "CODESYS Network Varible List"
+			"en": "CODESYS Network Variable List",
+			"de": "CODESYS Network Variable List",
+			"ru": "Список сетевых переменных CODESYS",
+			"pt": "Lista de variáveis ​​de rede CODESYS",
+			"nl": "CODESYS-netwerkvariabelenlijst",
+			"fr": "Liste des variables réseau CODESYS",
+			"it": "Elenco variabili di rete CODESYS",
+			"es": "Lista de variables de red CODESYS",
+			"pl": "Lista zmiennych sieciowych CODESYS",
+			"uk": "Список мережевих змінних CODESYS",
+			"zh-cn": "CODESYS 网络变量列表"
 		},
 		"desc": {
 			"en": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
-			"de": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
-			"ru": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
-			"pt": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
-			"nl": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
-			"fr": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
-			"it": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
-			"es": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
-			"pl": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
-			"zh-cn": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC"
+			"de": "Senden und empfangen von Netzwerkvariablenlisten (NVL) einer CODESYS-basierten SPS",
+			"ru": "Отправка и получение списков сетевых переменных (NVL) от ПЛК, управляемого CODESYS.",
+			"pt": "Envie e receba listas de variáveis ​​de rede (NVL) de PLC controlado por CODESYS",
+			"nl": "Verzend en ontvang netwerkvariabelenlijsten (NVL) van CODESYS-gestuurde PLC",
+			"fr": "Envoyer et recevoir des listes de variables réseau (NVL) à partir d'un automate piloté par CODESYS",
+			"it": "Invia e ricevi elenchi di variabili di rete (NVL) dal PLC gestito da CODESYS",
+			"es": "Enviar y recibir listas de variables de red (NVL) desde PLC controlado por CODESYS",
+			"pl": "Wysyłaj i odbieraj listy zmiennych sieciowych (NVL) ze sterownika PLC sterowanego CODESYS",
+			"uk": "Надсилання та отримання списків мережевих змінних (NVL) від ПЛК, керованого CODESYS",
+			"zh-cn": "从 CODESYS 驱动的 PLC 发送和接收网络变量列表 (NVL)"
 		},
 		"authors": ["Bannsaenger <bannsaenger@gmx.de>"],
 		"keywords": ["codesys nvl plc iec-61131-3"],
@@ -48,6 +51,7 @@
 		"main": "main.js",
 		"icon": "codesys-nvl.png",
 		"enabled": true,
+		"messagebox": true,
 		"extIcon": "https://raw.githubusercontent.com/Bannsaenger/ioBroker.codesys-nvl/main/admin/codesys-nvl.png",
 		"readme": "https://github.com/Bannsaenger/ioBroker.codesys-nvl/blob/main/README.md",
 		"loglevel": "info",
@@ -71,9 +75,23 @@
 			}
 		]
 	},
-	"native": {},
+	"native": {
+		"port": 1202,
+		"bind": "0.0.0.0",
+		"mainTimerInterval": 10,
+		"gvlInfo": []
+	},
 	"objects": [],
 	"instanceObjects": [
+		{
+			"_id": "",
+			"type": "meta",
+			"common": {
+				"name": "gvl files for codesys-nvl",
+				"type": "meta.user"
+			},
+			"native": {}
+		},
 		{
 			"_id": "info",
 			"type": "channel",
@@ -92,6 +110,14 @@
 				"read": true,
 				"write": false,
 				"def": false
+			},
+			"native": {}
+		},
+		{
+			"_id": "nvl",
+			"type": "folder",
+			"common": {
+				"name": "Network Variable Lists"
 			},
 			"native": {}
 		}
