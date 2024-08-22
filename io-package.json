@@ -17,7 +17,6 @@
 				"uk": "початковий випуск"
 			}
 		},
-		"title": "CODESYS Network Variable List",
 		"titleLang": {
 			"en": "CODESYS Network Variable List",
 			"de": "CODESYS Network Variable List",
@@ -52,7 +51,6 @@
 			"license": "MIT"
 		},
 		"platform": "Javascript/Node.js",
-		"main": "main.js",
 		"icon": "codesys-nvl.png",
 		"enabled": true,
 		"messagebox": true,
