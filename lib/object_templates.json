@@ -95,6 +95,15 @@
 	"variables": {
 		"BOOL": {
 			"type": "channel"
+		},
+		"STRING": {
+			"type": "channel"
+		},
+		"WSTRING": {
+			"type": "channel"
+		},
+		"INT": {
+			"type": "channel"
 		}
 	},
 	"BOOL": [
@@ -121,6 +130,92 @@
 				"read": true,
 				"write": true,
 				"def": false
+			},
+			"native": {}
+		}
+	],
+	"STRING": [
+		{
+			"_id": "type",
+			"type": "state",
+			"common": {
+				"role": "text",
+				"name": "iec-61131-3 name of the value",
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": "STRING"
+			},
+			"native": {}
+		},
+		{
+			"_id": "value",
+			"type": "state",
+			"common": {
+				"role": "indicator.state",
+				"name": "string value (1 byte per character) of the variable",
+				"type": "string",
+				"read": true,
+				"write": true,
+				"def": ""
+			},
+			"native": {}
+		}
+	],
+	"WSTRING": [
+		{
+			"_id": "type",
+			"type": "state",
+			"common": {
+				"role": "text",
+				"name": "iec-61131-3 name of the value",
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": "WSTRING"
+			},
+			"native": {}
+		},
+		{
+			"_id": "value",
+			"type": "state",
+			"common": {
+				"role": "indicator.state",
+				"name": "string value (2 bytes per character) of the variable (UCS-2 encoded)",
+				"type": "string",
+				"read": true,
+				"write": true,
+				"def": ""
+			},
+			"native": {}
+		}
+	],
+	"INT": [
+		{
+			"_id": "type",
+			"type": "state",
+			"common": {
+				"role": "text",
+				"name": "iec-61131-3 name of the value",
+				"type": "string",
+				"read": true,
+				"write": false,
+				"def": "INT"
+			},
+			"native": {}
+		},
+		{
+			"_id": "value",
+			"type": "state",
+			"common": {
+				"role": "indicator.state",
+				"name": "integer value -32768 - 32767",
+				"type": "number",
+				"min": -32768,
+				"max": 32767,
+				"read": true,
+				"write": true,
+				"def": 0
 			},
 			"native": {}
 		}

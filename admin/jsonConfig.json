@@ -8,13 +8,12 @@
 			"items": {
 				"bind": {
 					"type": "ip",
-					"listenOnAllPorts": true,
 					"onlyIp4": true,
 					"sm": 12,
 					"md": 6,
 					"lg": 4,
-					"label": "IP",
-					"help": "IP address to bind the port to"
+					"label": "bind_label",
+					"help": "bind_help"
 				},
 				"port": {
 					"type": "number",
@@ -23,12 +22,12 @@
 					"sm": 12,
 					"md": 6,
 					"lg": 2,
-					"label": "Port",
-					"help": "listen at this UDP port"
+					"label": "port_label",
+					"help": "port_help"
 				},
 				"_divider": {
 					"type": "divider",
-					"newline": true
+					"height": 5
 				},
 				"mainTimerInterval": {
 					"type": "number",
@@ -37,8 +36,18 @@
 					"sm": 12,
 					"md": 6,
 					"lg": 6,
-					"label": "Main timer interval",
-					"help": "Resolution of all timer based cyclic transmissions and minimum gap delays (in ms)"
+					"label": "mainTimerInterval_label",
+					"help": "mainTimerInterval_help"
+				},
+				"teleDelay": {
+					"type": "number",
+					"min": 0,
+					"max": 100,
+					"sm": 12,
+					"md": 6,
+					"lg": 6,
+					"label": "teleDelay_label",
+					"help": "teleDelay_help"
 				}
 			}
 		},
@@ -67,7 +76,7 @@
 							"title": "ListId",
 							"attr": "ListIdentifier",
 							"disabled": "1==1",
-							"tooltip": "List Identifier"
+							"tooltip": "ListIdentifierTT"
 						},
 						{
 							"type": "select",
@@ -78,7 +87,7 @@
 							],
 							"title": "Type",
 							"attr": "type",
-							"tooltip": "Usage of list: Disabled|Send|Receive"
+							"tooltip": "ListUsageTT"
 						},
 						{
 							"type": "checkbox",
