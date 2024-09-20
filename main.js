@@ -1,7 +1,7 @@
 /**
  *
  *      iobroker CODESYS Network Variable List (NVL) Adapter
- * 
+ *
  * 		Created with @iobroker/create-adapter v2.3.0
  *
  *      Copyright (c) 2024, Bannsaenger <bannsaenger@gmx.de>
