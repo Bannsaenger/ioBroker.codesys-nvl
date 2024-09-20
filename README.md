@@ -25,7 +25,7 @@ EN 61131 is a european standard based on the international standard IEC 61131-3 
 
 Data helper is taken from [jisotalo/iec-61131-3](https://github.com/jisotalo/iec-61131-3)
 
-Telegram handling (parsing and building) as well as dealing with the vaiable structure is taken from [Hopperpop](https://github.com/Hopperpop) and his project [node-red-contrib-nvl](https://github.com/Hopperpop/node-red-contrib-nvl)
+Telegram handling (parsing and building) as well as dealing with the variable structure is taken from [Hopperpop](https://github.com/Hopperpop) and his project [node-red-contrib-nvl](https://github.com/Hopperpop/node-red-contrib-nvl)
 
 ### Getting started
 
