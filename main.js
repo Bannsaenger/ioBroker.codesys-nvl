@@ -9,9 +9,9 @@
  *      MIT License
  *
  */
-"use strict";
+'use strict';
 
-const utils = require("@iobroker/adapter-core");
+const utils = require('@iobroker/adapter-core');
 
 const fs = require('fs');
 const udp = require('dgram');
@@ -25,12 +25,12 @@ class CodesysNvl extends utils.Adapter {
 	constructor(options) {
 		super({
 			...options,
-			name: "codesys-nvl",
+			name: 'codesys-nvl',
 		});
-		this.on("ready", this.onReady.bind(this));
-		this.on("stateChange", this.onStateChange.bind(this));
-		this.on("message", this.onMessage.bind(this));
-		this.on("unload", this.onUnload.bind(this));
+		this.on('ready', this.onReady.bind(this));
+		this.on('stateChange', this.onStateChange.bind(this));
+		this.on('message', this.onMessage.bind(this));
+		this.on('unload', this.onUnload.bind(this));
 
 		// read Objects template for object generation
 		this.objectsTemplates = JSON.parse(fs.readFileSync(__dirname + '/lib/object_templates.json', 'utf8'));
@@ -40,7 +40,7 @@ class CodesysNvl extends utils.Adapter {
 		// if set to false in initialisation process the adapter will be terminated before the network socket is bound
 		this.configurationOk= true;
 		this.gvlInfo = [];				// part of this.config to extend the configuration object after gvl file loading
-		this.mainTimerInterval = 0;		// from config	
+		this.mainTimerInterval = 0;		// from config
 		this.idsToCreate = {};			// all list ids which have to be created. If id extists in db then delete before creation
 		this.clientReady = false;		// true if data can be sent via the broadcast client connection
 
@@ -62,7 +62,7 @@ class CodesysNvl extends utils.Adapter {
 	async onReady() {
 		// Initialize your adapter here
 		// Reset the connection indicator during startup
-		this.setState("info.connection", false, true);
+		this.setState('info.connection', false, true);
 		// emitted server events
 		this.server.on('error', this.onServerError.bind(this));
 		this.server.on('listening', this.onServerListening.bind(this));
@@ -84,7 +84,7 @@ class CodesysNvl extends utils.Adapter {
 				this.terminate(utils.EXIT_CODES.INVALID_ADAPTER_CONFIG);
 			} else {
 				process.exit(utils.EXIT_CODES.INVALID_ADAPTER_CONFIG);
-			}			
+			}
 		} else {
 			// The adapters config (in the instance object everything under the attribute "native") is accessible via
 			// this.config:
@@ -154,67 +154,67 @@ class CodesysNvl extends utils.Adapter {
 				}
 			}
 		} catch (err) {
-            this.errorHandler(err, 'onMainTimerInterval');
-        }
+			this.errorHandler(err, 'onMainTimerInterval');
+		}
 	}
 
-    /**********************************************************************************************
+	/**********************************************************************************************
      * Methods related to Server events
      **********************************************************************************************/
-    /* #region Server events */
-    /**
+	/* #region Server events */
+	/**
      * Is called if a server error occurs
      * @param {any} error
      */
-    onServerError(error) {
-        this.log.error(`Codesys-NVL server got Error: ${error} closing socket`);
-        // Reset the connection indicator
-        this.setState('info.connection', false, true);
-        this.server.close();
-    }
+	onServerError(error) {
+		this.log.error(`Codesys-NVL server got Error: ${error} closing socket`);
+		// Reset the connection indicator
+		this.setState('info.connection', false, true);
+		this.server.close();
+	}
 
-    /**
+	/**
      * Is called when the server is ready to process traffic
      */
-    onServerListening() {
-        const addr = this.server.address();
-        this.log.info(`Codesys-NVL server ready on <${addr.address}> port <${addr.port}> proto <${addr.family}>`);
-        // Set the connection indicator after server goes for listening
-        this.setState('info.connection', true, true);
-    }
+	onServerListening() {
+		const addr = this.server.address();
+		this.log.info(`Codesys-NVL server ready on <${addr.address}> port <${addr.port}> proto <${addr.family}>`);
+		// Set the connection indicator after server goes for listening
+		this.setState('info.connection', true, true);
+	}
 
-    /**
+	/**
      * Is called when the server is closed via server.close
      */
-    onServerClose() {
-        this.log.info('Codesys-NVL server is closed');
-        // Reset the connection indicator
-        this.setState('info.connection', false, true);
-    }
+	onServerClose() {
+		this.log.info('Codesys-NVL server is closed');
+		// Reset the connection indicator
+		this.setState('info.connection', false, true);
+	}
 
-    /**
+	/**
      * Is called on new datagram msg from server
      * @param {Buffer} msg      the message content received by the server socket
      * @param {Object} info     the info for e.g. address of sending host
      */
-    async onServerMessage(msg, info) {
-        try {
-            const msg_hex = msg.toString('hex').toUpperCase();
+	async onServerMessage(msg, info) {
+		try {
+			const msg_hex = msg.toString('hex').toUpperCase();
 			this.log.debug(`-> ${msg.length} bytes from ${info.address}:${info.port}: <${this.logHexData(msg_hex)}> org: <${msg.toString()}>`);
 
-            // Check if payload is buffer
-            if (!Buffer.isBuffer(msg) || msg.length < 20){
-                this.log.error('Payload is not a valid buffer.');
-                return;
-            }
+			// Check if payload is buffer
+			if (!Buffer.isBuffer(msg) || msg.length < 20){
+				this.log.error('Payload is not a valid buffer.');
+				return;
+			}
 
-            const telegram = {
-                listId:     	msg.readUInt16LE(8),        // List Identifier
-                subId:      	msg.readUInt16LE(10),       // SubIndex
-                varSize:    	msg.readUInt16LE(12),       // Number of variables
-                teleSize:   	msg.readUInt16LE(14),       // Total length of telegram (header+data)
-                teleCounter:	msg.readUInt32LE(16)        // Send counter
-            }
+			const telegram = {
+				listId:     	msg.readUInt16LE(8),        // List Identifier
+				subId:      	msg.readUInt16LE(10),       // SubIndex
+				varSize:    	msg.readUInt16LE(12),       // Number of variables
+				teleSize:   	msg.readUInt16LE(14),       // Total length of telegram (header+data)
+				teleCounter:	msg.readUInt32LE(16)        // Send counter
+			};
 			this.log.debug(`listId: ${telegram.listId}, subId: ${telegram.subId}, varSize: ${telegram.varSize}, teleSize: ${telegram.teleSize}, teleCounter: ${telegram.teleCounter}`);
 
 			// @ts-ignore
@@ -245,15 +245,17 @@ class CodesysNvl extends utils.Adapter {
 				return;
 			}
 			// now try to parse the values
-            // Check if package is valid
-            let err = null;
-            let dataSize = msg.length - 20;
+			// Check if package is valid
+			let err = null;
+			// eslint-disable-next-line no-unused-vars
+			const dataSize = msg.length - 20;
 			//this.log.warn(`gvlItem: ${JSON.stringify(gvlItem, undefined, 1)}`);
-            if( telegram.subId >= gvlItem.gvlStructure.byteLength){
-                err = new Error(`Telegram has a subIndex higher than expected: ${telegram.subId}`);
-            } else if ( telegram.teleSize !== msg.length ){
-                err = new Error(`Telegram size (${msg.length}B) is different than the value in the header (${telegram.teleSize} Byte).`);
-            } /*else if ( dataSize !== nvl.packages[telegram.subId].byteSize ){
+			if( telegram.subId >= gvlItem.gvlStructure.byteLength){
+				err = new Error(`Telegram has a subIndex higher than expected: ${telegram.subId}`);
+			} else if ( telegram.teleSize !== msg.length ){
+				// eslint-disable-next-line no-unused-vars
+				err = new Error(`Telegram size (${msg.length}B) is different than the value in the header (${telegram.teleSize} Byte).`);
+			} /*else if ( dataSize !== nvl.packages[telegram.subId].byteSize ){
                 err = new Error(`Telegram datasize doesn\'t match with nvl definition for subIndex ${telegram.subId}. Expected: ${nvl.packages[telegram.subId].byteSize}B Got: ${dataSize}B`);
             } add later when telegrams with sub ids were added*/
 
@@ -270,52 +272,52 @@ class CodesysNvl extends utils.Adapter {
 			gvlItem.aktWatchActive = Math.floor((gvlItem.Interval / this.mainTimerInterval) * 2.5);
 
 		} catch (err) {
-            this.errorHandler(err, 'onServerMessage');
-        }
-    }
+			this.errorHandler(err, 'onServerMessage');
+		}
+	}
 	/* #endregion */
 
-    /**********************************************************************************************
+	/**********************************************************************************************
      * Methods related to Client events
      **********************************************************************************************/
-    /* #region Client events */
-    /**
+	/* #region Client events */
+	/**
      * Is called if a client error occurs
      * @param {any} error
      */
-    onClientError(error) {
-        this.log.error(`Codesys-NVL broadcast sender got Error: ${error} closing socket`);
-        // Reset the connection indicator
-        this.setState('info.connection', false, true);
+	onClientError(error) {
+		this.log.error(`Codesys-NVL broadcast sender got Error: ${error} closing socket`);
+		// Reset the connection indicator
+		this.setState('info.connection', false, true);
 		this.clientReady = false;
-        this.client.close();
-    }
+		this.client.close();
+	}
 
-    /**
+	/**
      * Is called when the client is ready to process traffic
      */
-    onClientListening() {
-        const addr = this.client.address();
-        this.log.info(`Codesys-NVL broadcast sender ready on <${addr.address}> port <${addr.port}> proto <${addr.family}>`);
+	onClientListening() {
+		const addr = this.client.address();
+		this.log.info(`Codesys-NVL broadcast sender ready on <${addr.address}> port <${addr.port}> proto <${addr.family}>`);
 		this.client.setBroadcast(true);
 		this.clientReady = true;
-    }
+	}
 
-    /**
+	/**
      * Is called when the client is closed via client.close
      */
-    onClientClose() {
-        this.log.info('Codesys-NVL broadcast sender is closed');
-        // Reset the connection indicator
-        this.setState('info.connection', false, true);
+	onClientClose() {
+		this.log.info('Codesys-NVL broadcast sender is closed');
+		// Reset the connection indicator
+		this.setState('info.connection', false, true);
 		this.clientReady = false;
-    }
+	}
 	/* #endregion */
 
-    /**********************************************************************************************
+	/**********************************************************************************************
      * Methods related to instance events
      **********************************************************************************************/
-    /* #region Instance events */
+	/* #region Instance events */
 	/**
 	 * Is called if a subscribed state changes
 	 * @param {string} id
@@ -340,13 +342,13 @@ class CodesysNvl extends utils.Adapter {
 	 * @param {ioBroker.Message} obj
 	 */
 	onMessage(obj) {
-		if (typeof obj === "object" && obj.message) {
-			if (obj.command === "send") {
+		if (typeof obj === 'object' && obj.message) {
+			if (obj.command === 'send') {
 				// e.g. send email or pushover or whatever
-				this.log.info("send command");
+				this.log.info('send command');
 
 				// Send response in callback if required
-				if (obj.callback) this.sendTo(obj.from, obj.command, "Message received", obj.callback);
+				if (obj.callback) this.sendTo(obj.from, obj.command, 'Message received', obj.callback);
 			}
 		}
 	}
@@ -360,8 +362,8 @@ class CodesysNvl extends utils.Adapter {
 			// Clear main timerinterval
 			clearInterval(this.mainTimer);
 
-            // Reset the connection indicator
-            this.setState('info.connection', false, true);
+			// Reset the connection indicator
+			this.setState('info.connection', false, true);
 
 			// close the server and client port
 			this.server.close();
@@ -374,10 +376,10 @@ class CodesysNvl extends utils.Adapter {
 	}
 	/* #endregion */
 
-    /**********************************************************************************************
+	/**********************************************************************************************
      * Methods related to telegram handling
      **********************************************************************************************/
-    /* #region Telegram handling */
+	/* #region Telegram handling */
 	/**
 	 * send a telegram, or part of it for the specified listId
 	 * @param {Number} listId the ID of the NVL list to send
@@ -407,7 +409,7 @@ class CodesysNvl extends utils.Adapter {
 
 			const varSize = Object.keys(gvlStructure.children).length;
 			const nvl = iec.fromString(gvlItem.nvlDef, 'NVL');
-			let data = nvl.getDefault();
+			const data = nvl.getDefault();
 			const statesToSend = await this.getStatesAsync(`${this.namespace}.nvl.${listId}.*`);
 			for (const stateToSend of Object.entries(statesToSend)) {
 				const valueArray = String(stateToSend[0]).split('.');
@@ -432,6 +434,7 @@ class CodesysNvl extends utils.Adapter {
 						if (Number(valueToSend) > 32767) valueToSend = 32767;
 						if (Number(valueToSend) < -32768) valueToSend = -32768;
 						data[variableToSend] = Number(valueToSend);
+						break;
 
 					default:
 						this.log.error(`dataType: ${gvlStructure.children[variableToSend].type} not implemented for sending`);
@@ -439,10 +442,10 @@ class CodesysNvl extends utils.Adapter {
 			}
 			//this.log.warn(`data: ${JSON.stringify(data, undefined, 1)}`);
 
-			let sendBuf = nvl.convertToBuffer(data);						// Convert the values to a buffer
+			const sendBuf = nvl.convertToBuffer(data);						// Convert the values to a buffer
 
 			// Build header
-			let header = Buffer.alloc(20);
+			const header = Buffer.alloc(20);
 			header.write('\0-S3', 0, 4);                              		// Protocol identity code
 			header.writeUInt16LE(listId, 8);                                // Index, COB-ID, listId, List Identifier
 			header.writeUInt16LE(0, 10);                                    // SubIndex
@@ -461,20 +464,20 @@ class CodesysNvl extends utils.Adapter {
 			this.client.send(Buffer.concat([header, sendBuf]), this.config.port, '255.255.255.255');
 
 		} catch (err) {
-            this.errorHandler(err, 'sendTelegram');
-        }
+			this.errorHandler(err, 'sendTelegram');
+		}
 	}
 	/* #endregion */
 
-    /**********************************************************************************************
+	/**********************************************************************************************
      * Methods related to configuration and database creation and update
      **********************************************************************************************/
-    /* #region configuration and database */
+	/* #region configuration and database */
 	/**
 	 * load content of all gvl files
 	 */
 	async loadGvlFiles() {
-        try {
+		try {
 			let gvlFileContent;
 			let validationResult;
 			let gvlFileXML;
@@ -484,7 +487,7 @@ class CodesysNvl extends utils.Adapter {
 			const dataDir = `${utils.getAbsoluteDefaultDataDir()}files/${this.namespace}`;
 			this.log.debug(`loading gvl files in directory: ${this.namespace}, realDir: ${dataDir}`);
 			const dirContent = await this.readDirAsync(this.namespace, '/');
-            for (let fileEntry of dirContent) {
+			for (const fileEntry of dirContent) {
 				if (fileEntry.isDir) continue;								// Skip directorys
 				if (fileEntry.file.split('.').pop() !== 'gvl') continue;	// skip not gvl files
 				let fileName = fileEntry.file;
@@ -517,7 +520,7 @@ class CodesysNvl extends utils.Adapter {
 						configEntry = {};
 					}
 
-					let localListId = gvlFileXML.GVL.NetvarSettings.ListIdentifier !== undefined ? Number(gvlFileXML.GVL.NetvarSettings.ListIdentifier) : 0;
+					const localListId = gvlFileXML.GVL.NetvarSettings.ListIdentifier !== undefined ? Number(gvlFileXML.GVL.NetvarSettings.ListIdentifier) : 0;
 					if (localListId === 0) {
 						this.log.error(`Error in GVL-File: ${fileName}, ListId = 0 or undefined`);
 						this.configurationOk = false;
@@ -531,7 +534,7 @@ class CodesysNvl extends utils.Adapter {
 					this.idsToCreate[localListId] = {'fileName': fileName, 'isDirty': true};		// remember fileName for comparison and set this listId dirty for db creation
 					// now parse the content
 					configEntry.fileName = fileName;
-					configEntry.ListIdentifier = localListId
+					configEntry.ListIdentifier = localListId;
 					configEntry.type = 'disabled';					// if a new or changed file then disable the list in config
 					configEntry.Pack = true;
 					configEntry.Checksum = gvlFileXML.GVL.NetvarSettings.Checksum !== undefined ? (gvlFileXML.GVL.NetvarSettings.Checksum === 'True' ? true : false) : false;
@@ -546,14 +549,14 @@ class CodesysNvl extends utils.Adapter {
 					// Combine global datatypes with nvl definition
 					let def = gvlFileXML.GVL.Declarations; // + "/r/n" + (datatypes || "");
 					// Replace VAR_GLOBAL to NVL structure type
-					let re = /VAR_GLOBAL(.+?)END_VAR/gms;
-					def = def.replace( re, "TYPE NVL\:\r\nSTRUCT\r\n$1\r\nEND_STRUCT\r\nEND_TYPE");
+					const re = /VAR_GLOBAL(.+?)END_VAR/gms;
+					def = def.replace( re, 'TYPE NVL:\r\nSTRUCT\r\n$1\r\nEND_STRUCT\r\nEND_TYPE');
 					// Parse definition
 					configEntry.gvlStructure = iec.fromString(def, 'NVL');
 					configEntry.nvlDef = def;
 					configEntry.fileContent = gvlFileContent;
 
-					this.gvlInfo.push(configEntry);	
+					this.gvlInfo.push(configEntry);
 					configDirty = true;					// now we have a new part in the configuration
 
 				} else if (validationResult.err) {
@@ -568,11 +571,11 @@ class CodesysNvl extends utils.Adapter {
 			if (configDirty) {
 				this.log.info(`Configuration in files changed. Writing back config object and restart the adapter`);
 
-                const instanceObject = await this.getForeignObjectAsync(`system.adapter.${this.namespace}`) || {};
+				const instanceObject = await this.getForeignObjectAsync(`system.adapter.${this.namespace}`) || {};
 				// @ts-ignore
-                instanceObject.native.gvlInfo = this.gvlInfo;
+				instanceObject.native.gvlInfo = this.gvlInfo;
 				// @ts-ignore
-                await this.setForeignObjectAsync(`system.adapter.${this.namespace}`, instanceObject);
+				await this.setForeignObjectAsync(`system.adapter.${this.namespace}`, instanceObject);
 			}
 
 			// reset object. Will be populated in onReady
@@ -580,14 +583,14 @@ class CodesysNvl extends utils.Adapter {
 
 		} catch (err) {
 			this.configurationOk = false;
-            this.errorHandler(err, 'loadGvlFiles');
-        }
+			this.errorHandler(err, 'loadGvlFiles');
+		}
 	}
 
 	/**
      * create the database (populate all values an delete unused)
      */
-    async createDatabaseAsync() {
+	async createDatabaseAsync() {
 		try {
 			this.log.info('Codesys-NVL start to create/update the database');
 
@@ -609,7 +612,7 @@ class CodesysNvl extends utils.Adapter {
 
 			// create the nvls
 			for (const key in this.idsToCreate) {
-				let locObj = this.objectsTemplates.nvl;
+				const locObj = this.objectsTemplates.nvl;
 				locObj._id = key;
 				locObj.common.name = this.idsToCreate[key].fileName;
 				await this.extendObject('nvl.' + locObj._id, locObj);
@@ -617,7 +620,7 @@ class CodesysNvl extends utils.Adapter {
 				const gvlStructure = this.gvlInfo.find(x => x.ListIdentifier == key).gvlStructure;
 				for (const element of this.objectsTemplates.nvls) {
 					await this.extendObject(`nvl.${key}.${element._id}`, element);
-					if (element._id !== 'var') {;
+					if (element._id !== 'var') {
 						for (const subelement of this.objectsTemplates[element._id]) {		// iterate through sub elements
 							await this.extendObject(`nvl.${key}.${element._id}.${subelement._id}`, subelement);
 							if (subelement._id === 'structure') {
@@ -635,7 +638,7 @@ class CodesysNvl extends utils.Adapter {
 								case 'INT':
 									this.createChannelTypeVar(Number(key), actVarName, gvlStructure.children[actVarName].type);
 									break;
-							
+
 								default:
 									this.log.error(`Variable type: ${gvlStructure.children[actVarName].type} not supported for now. Sorry. Giving up ...`);
 									this.configurationOk = false;
@@ -659,7 +662,7 @@ class CodesysNvl extends utils.Adapter {
 	 * @param {object} structure a nvl structure
 	 * @param {object} values the values to write to db
      */
-    async updateDatabaseAsync(listId = 0, structure, values) {
+	async updateDatabaseAsync(listId = 0, structure, values) {
 		try {
 			const baseId = `${this.namespace}.nvl.${listId}.var`;
 			for (const key in structure) {		// iterate all possible values
@@ -693,7 +696,7 @@ class CodesysNvl extends utils.Adapter {
 	 * @param {string} varName name of the variable to create
 	 * @param {string} varType type of the variable to create
      */
-    async createChannelTypeVar(listId = 0, varName = '', varType = 'BOOL') {
+	async createChannelTypeVar(listId = 0, varName = '', varType = 'BOOL') {
 		try {
 			if (this.objectsTemplates[varType] === undefined) {
 				this.log.error(`unknown variable type: ${varType}. Giving up`);
@@ -729,7 +732,7 @@ class CodesysNvl extends utils.Adapter {
 		retStr = retStr.substring(0, retStr.length - 1);
 		return retStr;
 	}
-	
+
 	/**
 	 * convert the given string to a number of milliseconds
 	 * @param {string} timeStr TIME string
@@ -757,7 +760,7 @@ class CodesysNvl extends utils.Adapter {
 				case 'ms':
 					retTime += timeValue;
 					break;
-				
+
 				case 's':
 					retTime += timeValue * 1000;
 					break;
