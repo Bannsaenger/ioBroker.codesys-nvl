@@ -9,9 +9,11 @@
 				"bind": {
 					"type": "ip",
 					"onlyIp4": true,
+                    "xs": 12,
 					"sm": 12,
 					"md": 6,
 					"lg": 4,
+                    "xl": 4,
 					"label": "bind_label",
 					"help": "bind_help"
 				},
@@ -19,9 +21,11 @@
 					"type": "number",
 					"min": 1,
 					"max": 65565,
+                    "xs": 12,
 					"sm": 12,
 					"md": 6,
 					"lg": 2,
+                    "xl": 2,
 					"label": "port_label",
 					"help": "port_help"
 				},
@@ -33,9 +37,11 @@
 					"type": "number",
 					"min": 10,
 					"max": 10000,
+                    "xs": 12,
 					"sm": 12,
 					"md": 6,
 					"lg": 6,
+                    "xl": 6,
 					"label": "mainTimerInterval_label",
 					"help": "mainTimerInterval_help"
 				},
@@ -43,9 +49,11 @@
 					"type": "number",
 					"min": 0,
 					"max": 100,
+                    "xs": 12,
 					"sm": 12,
 					"md": 6,
 					"lg": 6,
+                    "xl": 6,
 					"label": "teleDelay_label",
 					"help": "teleDelay_help"
 				}
@@ -57,9 +65,11 @@
 			"items": {
 				"gvlInfo": {
 					"type": "table",
+                    "xs": 12,
 					"sm": 12,
 					"md": 12,
 					"lg": 12,
+                    "xl": 12,
 					"items": [
 						{
 							"type": "text",
