@@ -35,8 +35,7 @@ Telegram handling (parsing and building) as well as dealing with the variable st
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.0.1 (2026-05-14)
 
 -   (Bannsaenger) initial release
 
