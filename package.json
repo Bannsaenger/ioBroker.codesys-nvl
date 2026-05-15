@@ -1,6 +1,6 @@
 {
   "name": "iobroker.codesys-nvl",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "Send and receive Network Variable Lists (NVL) from CODESYS driven PLC",
   "author": {
     "name": "Bannsaenger",

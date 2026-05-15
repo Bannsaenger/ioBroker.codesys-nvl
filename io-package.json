@@ -1,21 +1,8 @@
 {
   "common": {
     "name": "codesys-nvl",
-    "version": "0.0.2",
+    "version": "0.0.1",
     "news": {
-      "0.0.2": {
-        "en": "add initial documentation",
-        "de": "erstdokumentation hinzufügen",
-        "ru": "добавить начальную документацию",
-        "pt": "adicionar documentação inicial",
-        "nl": "eerste documentatie toevoegen",
-        "fr": "ajouter la documentation initiale",
-        "it": "aggiungere la documentazione iniziale",
-        "es": "añadir documentación inicial",
-        "pl": "dodać wstępną dokumentację",
-        "uk": "додати початкову документацію",
-        "zh-cn": "添加初始文档"
-      },
       "0.0.1": {
         "en": "initial release",
         "de": "Erstveröffentlichung",
