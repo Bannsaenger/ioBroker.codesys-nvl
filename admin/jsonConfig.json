@@ -1,154 +1,163 @@
 {
-	"i18n": true,
-	"type": "tabs",
-	"items": {
-		"_options": {
-			"type": "panel",
-			"label": "options",
-			"items": {
-				"bind": {
-					"type": "ip",
-					"onlyIp4": true,
+    "i18n": true,
+    "type": "tabs",
+    "items": {
+        "_options": {
+            "type": "panel",
+            "label": "options",
+            "items": {
+                "bind": {
+                    "type": "ip",
+                    "onlyIp4": true,
                     "xs": 12,
-					"sm": 12,
-					"md": 6,
-					"lg": 4,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
                     "xl": 4,
-					"label": "bind_label",
-					"help": "bind_help"
-				},
-				"port": {
-					"type": "number",
-					"min": 1,
-					"max": 65565,
+                    "label": "bind_label",
+                    "help": "bind_help"
+                },
+                "port": {
+                    "type": "number",
+                    "min": 1,
+                    "max": 65565,
                     "xs": 12,
-					"sm": 12,
-					"md": 6,
-					"lg": 2,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 2,
                     "xl": 2,
-					"label": "port_label",
-					"help": "port_help"
-				},
-				"_divider": {
-					"type": "divider",
-					"height": 5
-				},
-				"mainTimerInterval": {
-					"type": "number",
-					"min": 10,
-					"max": 10000,
+                    "label": "port_label",
+                    "help": "port_help"
+                },
+                "_divider": {
+                    "type": "divider",
+                    "height": 5
+                },
+                "mainTimerInterval": {
+                    "type": "number",
+                    "min": 10,
+                    "max": 10000,
                     "xs": 12,
-					"sm": 12,
-					"md": 6,
-					"lg": 6,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6,
                     "xl": 6,
-					"label": "mainTimerInterval_label",
-					"help": "mainTimerInterval_help"
-				},
-				"teleDelay": {
-					"type": "number",
-					"min": 0,
-					"max": 100,
+                    "label": "mainTimerInterval_label",
+                    "help": "mainTimerInterval_help"
+                },
+                "teleDelay": {
+                    "type": "number",
+                    "min": 0,
+                    "max": 100,
                     "xs": 12,
-					"sm": 12,
-					"md": 6,
-					"lg": 6,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6,
                     "xl": 6,
-					"label": "teleDelay_label",
-					"help": "teleDelay_help"
-				}
-			}
-		},
-		"_nvl": {
-			"type": "panel",
-			"label": "nvl",
-			"items": {
-				"gvlInfo": {
-					"type": "table",
+                    "label": "teleDelay_label",
+                    "help": "teleDelay_help"
+                }
+            }
+        },
+        "_nvl": {
+            "type": "panel",
+            "label": "nvl",
+            "items": {
+                "gvlInfo": {
+                    "type": "table",
                     "xs": 12,
-					"sm": 12,
-					"md": 12,
-					"lg": 12,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12,
                     "xl": 12,
-					"items": [
-						{
-							"type": "text",
-							"title": "File",
-							"attr": "fileName",
-							"disabled": "1==1",
-							"filter": false,
-							"sort": false,
-							"readOnly": true,
-							"noClearButton": true
-						},
-						{
-							"type": "number",
-							"title": "ListId",
-							"attr": "ListIdentifier",
-							"disabled": "1==1",
-							"tooltip": "ListIdentifierTT"
-						},
-						{
-							"type": "select",
-							"options": [
-								{ "label": "Disabled", "value": "disabled" },
-								{ "label": "Send", "value": "send" },
-								{ "label": "Receive", "value": "receive" }
-							],
-							"title": "Type",
-							"attr": "type",
-							"tooltip": "ListUsageTT"
-						},
-						{
-							"type": "checkbox",
-							"title": "Chk",
-							"attr": "Checksum",
-							"tooltip": "Checksum"
-						},
-						{
-							"type": "checkbox",
-							"title": "Ack",
-							"attr": "Acknowledge",
-							"tooltip": "Acknowledge"
-						},
-						{
-							"type": "checkbox",
-							"title": "Cycl",
-							"attr": "CyclicTransmission",
-							"tooltip": "Cyclic Transmission"
-						},
-						{
-							"type": "checkbox",
-							"title": "OnC",
-							"attr": "TransmissionOnChange",
-							"tooltip": "Transmission On Change"
-						},
-						{
-							"type": "checkbox",
-							"title": "OnE",
-							"attr": "TransmissionOnEvent",
-							"tooltip": "Transmission On Event"
-						},
-						{
-							"type": "number",
-							"min": 1,
-							"max": 1000000,
-							"title": "Interval",
-							"attr": "Interval",
-							"tooltip": "interval between cyclic transmissions"
-						},
-						{
-							"type": "number",
-							"min": 1,
-							"max": 1000000,
-							"title": "MinGap",
-							"attr": "MinGap",
-							"tooltip": "minimum gap between nvl sends"
-						}
-					],
-					"noDelete": true
-				}
-			}
-		}
-	}
+                    "items": [
+                        {
+                            "type": "text",
+                            "title": "File",
+                            "attr": "fileName",
+                            "disabled": "1==1",
+                            "filter": false,
+                            "sort": false,
+                            "readOnly": true,
+                            "noClearButton": true
+                        },
+                        {
+                            "type": "number",
+                            "title": "ListId",
+                            "attr": "ListIdentifier",
+                            "disabled": "1==1",
+                            "tooltip": "ListIdentifierTT"
+                        },
+                        {
+                            "type": "select",
+                            "options": [
+                                {
+                                    "label": "Disabled",
+                                    "value": "disabled"
+                                },
+                                {
+                                    "label": "Send",
+                                    "value": "send"
+                                },
+                                {
+                                    "label": "Receive",
+                                    "value": "receive"
+                                }
+                            ],
+                            "title": "Type",
+                            "attr": "type",
+                            "tooltip": "ListUsageTT"
+                        },
+                        {
+                            "type": "checkbox",
+                            "title": "Chk",
+                            "attr": "Checksum",
+                            "tooltip": "Checksum"
+                        },
+                        {
+                            "type": "checkbox",
+                            "title": "Ack",
+                            "attr": "Acknowledge",
+                            "tooltip": "Acknowledge"
+                        },
+                        {
+                            "type": "checkbox",
+                            "title": "Cycl",
+                            "attr": "CyclicTransmission",
+                            "tooltip": "Cyclic Transmission"
+                        },
+                        {
+                            "type": "checkbox",
+                            "title": "OnC",
+                            "attr": "TransmissionOnChange",
+                            "tooltip": "Transmission On Change"
+                        },
+                        {
+                            "type": "checkbox",
+                            "title": "OnE",
+                            "attr": "TransmissionOnEvent",
+                            "tooltip": "Transmission On Event"
+                        },
+                        {
+                            "type": "number",
+                            "min": 1,
+                            "max": 1000000,
+                            "title": "Interval",
+                            "attr": "Interval",
+                            "tooltip": "interval between cyclic transmissions"
+                        },
+                        {
+                            "type": "number",
+                            "min": 1,
+                            "max": 1000000,
+                            "title": "MinGap",
+                            "attr": "MinGap",
+                            "tooltip": "minimum gap between nvl sends"
+                        }
+                    ],
+                    "noDelete": true
+                }
+            }
+        }
+    }
 }

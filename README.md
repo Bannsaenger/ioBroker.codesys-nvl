@@ -95,11 +95,16 @@ In a **send** list you can set the values in the database to transmit the data t
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- (Bannsaenger) fixed errors for check in to repository
+
 ### 0.0.2 (2026-05-15)
 - (Bannsaenger) add initial documentation
 
 ### 0.0.1 (2026-05-14)
 - (Bannsaenger) initial release
+
+[Older changelogs can be found there](CHANGELOG_OLD.md)
 
 ## License
 

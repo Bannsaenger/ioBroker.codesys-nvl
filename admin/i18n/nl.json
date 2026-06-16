@@ -1,0 +1,22 @@
+{
+    "Acknowledge": "Erkennen",
+    "Checksum": "Controlesom",
+    "Cyclic Transmission": "Cyclische transmissie",
+    "ListIdentifierTT": "Lijst-ID",
+    "ListUsageTT": "Gebruik van lijst: Uitgeschakeld|Verzenden|Ontvangen",
+    "Transmission On Change": "Verzending bij verandering",
+    "Transmission On Event": "Transmissie bij gebeurtenis",
+    "bind_help": "IP-adres waaraan de poort moet worden gekoppeld",
+    "bind_label": "IP",
+    "codesys-nvl adapter settings": "Adapterinstellingen voor codesys-nvl",
+    "interval between cyclic transmissions": "interval tussen cyclische transmissies",
+    "mainTimerInterval_help": "Resolutie van alle op timer gebaseerde cyclische transmissies en minimale vertragingen (in ms)",
+    "mainTimerInterval_label": "Hoofdtimerinterval",
+    "minimum gap between nvl sends": "minimale kloof tussen nvl-verzendingen",
+    "nvl": "Lijsten met netwerkvariabelen",
+    "options": "opties",
+    "port_help": "luister op deze UDP-poort",
+    "port_label": "Poort",
+    "teleDelay_help": "Als een telegram is opgedeeld in delen met SubID's, wacht dan x timercycli voordat u de waarden doorgeeft aan de database. 0 = geslaagd elke keer dat een telegramdeel wordt ontvangen",
+    "teleDelay_label": "Wacht tot het telegram is voltooid"
+}

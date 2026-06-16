@@ -124,7 +124,7 @@
 			"_id": "value",
 			"type": "state",
 			"common": {
-				"role": "indicator.state",
+				"role": "sensor",
 				"name": "boolean value of the variable",
 				"type": "boolean",
 				"read": true,
@@ -152,7 +152,7 @@
 			"_id": "value",
 			"type": "state",
 			"common": {
-				"role": "indicator.state",
+				"role": "text",
 				"name": "string value (1 byte per character) of the variable",
 				"type": "string",
 				"read": true,
@@ -180,7 +180,7 @@
 			"_id": "value",
 			"type": "state",
 			"common": {
-				"role": "indicator.state",
+				"role": "text",
 				"name": "string value (2 bytes per character) of the variable (UCS-2 encoded)",
 				"type": "string",
 				"read": true,
@@ -208,7 +208,7 @@
 			"_id": "value",
 			"type": "state",
 			"common": {
-				"role": "indicator.state",
+				"role": "value",
 				"name": "integer value -32768 - 32767",
 				"type": "number",
 				"min": -32768,

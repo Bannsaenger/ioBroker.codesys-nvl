@@ -1,0 +1,22 @@
+{
+    "Acknowledge": "Reconhecer",
+    "Checksum": "Soma de verificação",
+    "Cyclic Transmission": "Transmissão Cíclica",
+    "ListIdentifierTT": "Identificador de lista",
+    "ListUsageTT": "Uso da lista: Desativado|Enviar|Receber",
+    "Transmission On Change": "Transmissão em mudança",
+    "Transmission On Event": "Transmissão no Evento",
+    "bind_help": "Endereço IP ao qual vincular a porta",
+    "bind_label": "PI",
+    "codesys-nvl adapter settings": "Configurações do adaptador para codesys-nvl",
+    "interval between cyclic transmissions": "intervalo entre transmissões cíclicas",
+    "mainTimerInterval_help": "Resolução de todas as transmissões cíclicas baseadas em temporizador e atrasos mínimos de intervalo (em ms)",
+    "mainTimerInterval_label": "Intervalo do temporizador principal",
+    "minimum gap between nvl sends": "intervalo mínimo entre envios nvl",
+    "nvl": "Listas de variáveis ​​de rede",
+    "options": "opções",
+    "port_help": "ouça nesta porta UDP",
+    "port_label": "Porta",
+    "teleDelay_help": "Se um telegrama for dividido em partes com SubIDs, aguarde x ciclos de temporizador antes de passar os valores para o banco de dados. 0 = passa toda vez que uma parte do telegrama é recebida",
+    "teleDelay_label": "Aguarde a conclusão do telegrama"
+}

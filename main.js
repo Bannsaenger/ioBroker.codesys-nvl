@@ -11,12 +11,24 @@
  */
 'use strict';
 
+/* eslint:disable no-redundant-jsdoc*/
+
 const utils = require('@iobroker/adapter-core');
 
 const fs = require('node:fs');
 const udp = require('node:dgram');
 const xmlHandler = require('fast-xml-parser');
 const iec = require('iec-61131-3');
+
+/**
+ * @typedef {object} gvlInfo
+ * @property {string} type ype of list e.g. disabled, send or receive
+ * @property {number} nextSend time for the next telegram sending
+ * @property {number} aktMinGap if > 0 we have to wait for the gap to pass by
+ * @property {boolean} dirtyAfterGap if there was a try to send a telegram in the gap, send ist after gap passes by
+ * @property {number} aktWatchActive for receive lists. If > 0 we wait for a new telegram to receive. 0 after decrement set connection to false, 0 nothing to do for now
+ * @property {number} teleCounter Telegram counter. Initialize here and increment ist on telegram sending
+ */
 
 class CodesysNvl extends utils.Adapter {
     /**
@@ -80,11 +92,7 @@ class CodesysNvl extends utils.Adapter {
 
         if (this.configurationOk !== true) {
             this.log.error(`Codesys-NVL configuration invalid, exiting adapter`);
-            if (typeof this.terminate === 'function') {
-                this.terminate(utils.EXIT_CODES.INVALID_ADAPTER_CONFIG);
-            } else {
-                process.exit(utils.EXIT_CODES.INVALID_ADAPTER_CONFIG);
-            }
+            this.terminate(utils.EXIT_CODES.INVALID_ADAPTER_CONFIG);
         } else {
             // The adapters config (in the instance object everything under the attribute "native") is accessible via
             // this.config:
@@ -98,7 +106,9 @@ class CodesysNvl extends utils.Adapter {
             this.server.bind(this.config.port, '0.0.0.0');
             this.client.bind(0, this.config.bind);
             this.mainTimerInterval = this.config.mainTimerInterval;
-            for (const gvlInfo of this.config.gvlInfo) {
+            for (const gvlInfoConf of this.config.gvlInfo) {
+                /** @type {gvlInfo} */
+                const gvlInfo = gvlInfoConf;
                 if (gvlInfo.type === 'disabled') {
                     continue;
                 } // skip disabled NVLs
@@ -384,6 +394,7 @@ class CodesysNvl extends utils.Adapter {
     onUnload(callback) {
         try {
             // Clear main timerinterval
+            // @ts-expect-error mainTimer is defined
             clearInterval(this.mainTimer);
 
             // Reset the connection indicator
@@ -438,7 +449,7 @@ class CodesysNvl extends utils.Adapter {
 
             const varSize = Object.keys(gvlStructure.children).length;
             const nvl = iec.fromString(gvlItem.nvlDef, 'NVL');
-            const data = nvl.getDefault();
+            const data = nvl.getDefault() || {};
             const statesToSend = await this.getStatesAsync(`${this.namespace}.nvl.${listId}.*`);
             for (const stateToSend of Object.entries(statesToSend)) {
                 const valueArray = String(stateToSend[0]).split('.');
@@ -557,6 +568,7 @@ class CodesysNvl extends utils.Adapter {
                         continue;
                     }
                     fileName = fileName.replaceAll(' ', '_'); // for safety reasons
+                    // @ts-expect-error construct works
                     configEntry = this.config.gvlInfo.find(x => x.fileName === fileName); // if file was loaded before
                     if (typeof configEntry === 'object') {
                         // @ts-expect-error works in real life

@@ -1,0 +1,22 @@
+{
+    "Acknowledge": "Reconnaître",
+    "Checksum": "Somme de contrôle",
+    "Cyclic Transmission": "Transmission cyclique",
+    "ListIdentifierTT": "Identificateur de liste",
+    "ListUsageTT": "Utilisation de la liste : Désactivé|Envoyer|Recevoir",
+    "Transmission On Change": "Transmission au changement",
+    "Transmission On Event": "Transmission sur événement",
+    "bind_help": "Adresse IP à laquelle lier le port",
+    "bind_label": "PI",
+    "codesys-nvl adapter settings": "Paramètres de l'adaptateur pour codesys-nvl",
+    "interval between cyclic transmissions": "intervalle entre les transmissions cycliques",
+    "mainTimerInterval_help": "Résolution de toutes les transmissions cycliques basées sur une minuterie et délais d'intervalle minimum (en ms)",
+    "mainTimerInterval_label": "Intervalle de minuterie principal",
+    "minimum gap between nvl sends": "écart minimum entre les envois nvl",
+    "nvl": "Listes de variables réseau",
+    "options": "choix",
+    "port_help": "écoutez ce port UDP",
+    "port_label": "Port",
+    "teleDelay_help": "Si un télégramme est divisé en parties avec des SubID, attendez x cycles de minuterie avant de transmettre les valeurs à la base de données. 0 = réussi à chaque réception d'une partie du télégramme",
+    "teleDelay_label": "Attendez que le télégramme soit terminé"
+}

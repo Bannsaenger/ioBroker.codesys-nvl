@@ -1,0 +1,22 @@
+{
+    "Acknowledge": "Визнати",
+    "Checksum": "Контрольна сума",
+    "Cyclic Transmission": "Циклічна передача",
+    "ListIdentifierTT": "Ідентифікатор списку",
+    "ListUsageTT": "Використання списку: Вимкнено|Надіслати|Отримати",
+    "Transmission On Change": "Передача на зміну",
+    "Transmission On Event": "Передача за подією",
+    "bind_help": "IP-адреса для прив’язки порту",
+    "bind_label": "IP",
+    "codesys-nvl adapter settings": "Параметри адаптера для codesys-nvl",
+    "interval between cyclic transmissions": "інтервал між циклічними передачами",
+    "mainTimerInterval_help": "Роздільна здатність усіх циклічних передач на основі таймера та мінімальних затримок (у мс)",
+    "mainTimerInterval_label": "Основний інтервал таймера",
+    "minimum gap between nvl sends": "мінімальний проміжок між відправленнями nvl",
+    "nvl": "Списки мережевих змінних",
+    "options": "параметри",
+    "port_help": "слухати через цей порт UDP",
+    "port_label": "Порт",
+    "teleDelay_help": "Якщо телеграма розділена на частини з SubID, зачекайте x циклів таймера, перш ніж передавати значення до бази даних. 0 = проходити щоразу, коли надходить частина телеграми",
+    "teleDelay_label": "Дочекайтеся завершення телеграми"
+}
