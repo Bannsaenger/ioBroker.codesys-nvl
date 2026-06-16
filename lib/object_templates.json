@@ -124,7 +124,7 @@
 			"_id": "value",
 			"type": "state",
 			"common": {
-				"role": "sensor",
+				"role": "switch",
 				"name": "boolean value of the variable",
 				"type": "boolean",
 				"read": true,
@@ -208,7 +208,7 @@
 			"_id": "value",
 			"type": "state",
 			"common": {
-				"role": "value",
+				"role": "level",
 				"name": "integer value -32768 - 32767",
 				"type": "number",
 				"min": -32768,
