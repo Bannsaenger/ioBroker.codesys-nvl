@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "codesys-nvl",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "news": {
+      "0.0.3": {
+        "en": "fixed errors for check in to repository",
+        "de": "fixed errors für check-in in repository",
+        "ru": "исправленные ошибки для проверки в репозитории",
+        "pt": "erros corrigidos para check-in no repositório",
+        "nl": "vaste fouten voor inchecken naar repository",
+        "fr": "erreurs fixes pour l'enregistrement dans le dépôt",
+        "it": "errori fissi per il check-in al repository",
+        "es": "errores fijos para el check in al repositorio",
+        "pl": "stałe błędy do sprawdzenia w repozytorium",
+        "uk": "виправлені помилки для перевірки в репозиторію",
+        "zh-cn": "输入仓库的固定错误"
+      },
       "0.0.2": {
         "en": "add initial documentation",
         "de": "erstdokumentation hinzufügen",
