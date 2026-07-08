@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "codesys-nvl",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "news": {
+      "0.0.4": {
+        "en": "fixed errors from code review for check in to latest repository",
+        "de": "Fehler aus der Codeüberprüfung für den Check-in in das neueste Repository behoben.",
+        "ru": "Исправлены ошибки, выявленные в ходе проверки кода, для включения в последнюю версию репозитория.",
+        "pt": "Erros corrigidos da revisão de código para inclusão no repositório mais recente.",
+        "nl": "Fouten uit codebeoordeling gecorrigeerd voor het inchecken in de meest recente repository.",
+        "fr": "Correction d'erreurs issues de la revue de code pour l'intégration au dépôt le plus récent",
+        "it": "Errori corretti dalla revisione del codice per il commit nell'ultimo repository",
+        "es": "Se corrigieron errores de la revisión de código para la incorporación al repositorio más reciente.",
+        "pl": "naprawiono błędy z przeglądu kodu w celu zameldowania się w najnowszym repozytorium",
+        "uk": "виправлено помилки під час перевірки коду для реєстрації в останньому репозиторії",
+        "zh-cn": "已修复代码审查中发现的错误，以便提交到最新仓库。"
+      },
       "0.0.3": {
         "en": "fixed errors for check in to repository",
         "de": "fixed errors für check-in in repository",

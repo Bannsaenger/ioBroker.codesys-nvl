@@ -95,6 +95,9 @@ In a **send** list you can set the values in the database to transmit the data t
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### 0.0.4 (2026-07-08)
+- (Bannsaenger) fixed errors from code review for check in to latest repository
+
 ### 0.0.3 (2026-06-16)
 - (Bannsaenger) fixed errors for check in to repository
 
