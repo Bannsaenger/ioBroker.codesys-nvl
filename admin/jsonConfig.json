@@ -84,7 +84,7 @@
                         {
                             "type": "number",
                             "title": "ListId",
-                            "attr": "ListIdentifier",
+                            "attr": "listIdentifier",
                             "disabled": "1==1",
                             "tooltip": "ListIdentifierTT"
                         },
@@ -111,31 +111,31 @@
                         {
                             "type": "checkbox",
                             "title": "Chk",
-                            "attr": "Checksum",
+                            "attr": "checksum",
                             "tooltip": "Checksum"
                         },
                         {
                             "type": "checkbox",
                             "title": "Ack",
-                            "attr": "Acknowledge",
+                            "attr": "acknowledge",
                             "tooltip": "Acknowledge"
                         },
                         {
                             "type": "checkbox",
                             "title": "Cycl",
-                            "attr": "CyclicTransmission",
+                            "attr": "cyclicTransmission",
                             "tooltip": "Cyclic Transmission"
                         },
                         {
                             "type": "checkbox",
                             "title": "OnC",
-                            "attr": "TransmissionOnChange",
+                            "attr": "transmissionOnChange",
                             "tooltip": "Transmission On Change"
                         },
                         {
                             "type": "checkbox",
                             "title": "OnE",
-                            "attr": "TransmissionOnEvent",
+                            "attr": "transmissionOnEvent",
                             "tooltip": "Transmission On Event"
                         },
                         {
@@ -143,7 +143,7 @@
                             "min": 1,
                             "max": 1000000,
                             "title": "Interval",
-                            "attr": "Interval",
+                            "attr": "interval",
                             "tooltip": "interval between cyclic transmissions"
                         },
                         {
@@ -151,7 +151,7 @@
                             "min": 1,
                             "max": 1000000,
                             "title": "MinGap",
-                            "attr": "MinGap",
+                            "attr": "minGap",
                             "tooltip": "minimum gap between nvl sends"
                         }
                     ],

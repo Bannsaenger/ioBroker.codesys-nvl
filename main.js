@@ -22,8 +22,18 @@ const iec = require('iec-61131-3');
 
 /**
  * @typedef {object} gvlInfo
- * @property {string} type ype of list e.g. disabled, send or receive
- * @property {number} nextSend time for the next telegram sending
+ * @property {string} listIdentifier name of list
+ * @property {string} type type of list e.g. disabled, send or receive
+ * @property {boolean} checksum true if checksum is used (not implemented yet)
+ * @property {boolean} acknowledge true if acknowledge is used (not implemented yet)
+ * @property {boolean} cyclicTransmission true if cyclicTransmission is used (not implemented yet)
+ * @property {boolean} transmissionOnChange true if transmissionOnChange is used (not implemented yet)
+ * @property {boolean} transmissionOnEvent true if transmissionOnEvent is used (not implemented yet)
+ * @property {Array} eventVariable contains the variable names on which to transmit on event (not implemented yet)
+ * @property {number} interval interval for cyclic sendinmg (in ms)
+ * @property {number} nextSend actual time for the next telegram sending (counter)
+ * @property {number} nextSendTicks time for the next telegram sending (amount of timer ticks)
+ * @property {number} minGap minmum gap between sendinges, if configured by GVL file
  * @property {number} aktMinGap if > 0 we have to wait for the gap to pass by
  * @property {boolean} dirtyAfterGap if there was a try to send a telegram in the gap, send ist after gap passes by
  * @property {number} aktWatchActive for receive lists. If > 0 we wait for a new telegram to receive. 0 after decrement set connection to false, 0 nothing to do for now
@@ -41,7 +51,6 @@ class CodesysNvl extends utils.Adapter {
         });
         this.on('ready', this.onReady.bind(this));
         this.on('stateChange', this.onStateChange.bind(this));
-        this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
 
         // read Objects template for object generation
@@ -53,6 +62,7 @@ class CodesysNvl extends utils.Adapter {
         this.configurationOk = true;
         this.gvlInfo = []; // part of this.config to extend the configuration object after gvl file loading
         this.mainTimerInterval = 0; // from config
+        this.teleDelay = this.config.teleDelay || 0; // timeto wait for a multi-part telegram to complete (reserverd for future use)
         this.idsToCreate = {}; // all list ids which have to be created. If id extists in db then delete before creation
         this.clientReady = false; // true if data can be sent via the broadcast client connection
 
@@ -105,7 +115,7 @@ class CodesysNvl extends utils.Adapter {
             this.log.info(`Codesys-NVL bind UDP socket to: <${this.config.bind}:${this.config.port}>`);
             this.server.bind(this.config.port, '0.0.0.0');
             this.client.bind(0, this.config.bind);
-            this.mainTimerInterval = this.config.mainTimerInterval;
+            this.mainTimerInterval = Math.min(Math.max(this.config.mainTimerInterval || 10, 10), 10000);
             for (const gvlInfoConf of this.config.gvlInfo) {
                 /** @type {gvlInfo} */
                 const gvlInfo = gvlInfoConf;
@@ -114,15 +124,22 @@ class CodesysNvl extends utils.Adapter {
                 } // skip disabled NVLs
                 if (gvlInfo.type === 'send') {
                     gvlInfo.nextSend = Math.floor(Math.random() * 10); // for the first telegram sending
+                    // guard interval
+                    if (gvlInfo.interval) {
+                        gvlInfo.interval = Math.max(gvlInfo.interval, this.mainTimerInterval);
+                    } else {
+                        gvlInfo.interval = this.mainTimerInterval;
+                    }
+                    gvlInfo.nextSendTicks = Math.floor(gvlInfo.interval / this.mainTimerInterval); // guarded before
                 }
-                //gvlInfo.aktMinGap = Math.floor(gvlInfo.MinGap / this.mainTimerInterval) + 1;	// because this interval is mostly short enough
-                gvlInfo.aktMinGap = 0; // if > 0 we have to wait for the gap to pass by
+                // gvlInfo.aktMinGap = Math.floor(gvlInfo.minGap / this.mainTimerInterval) + 1;	// because this interval is mostly short enough
+                gvlInfo.aktMinGap = 0; // if > 0 we have to wait for the gap to pass by, not for the first run
                 gvlInfo.dirtyAfterGap = true; // if there was a try to send a telegram in the gap, send ist after gap passes by
                 gvlInfo.aktWatchActive = 0; // for receive lists. If > 0 we wait for a new telegram to receive. 0 after decrement set connection to false, 0 nothing to do for now
                 gvlInfo.teleCounter = 1; // Telegram counter. Initialize here and increment ist on telegram sending
                 this.gvlInfo.push(gvlInfo); // put the gvlInfo to the acrive NVLs
             }
-            this.mainTimer = this.setInterval(this.onMainTimerInterval.bind(this), this.mainTimerInterval);
+            this.mainTimer = this.setTimeout(this.onMainTimerInterval.bind(this), this.mainTimerInterval);
             //this.log.debug(`${JSON.stringify(this.gvlInfo, undefined, 1)}`);
         }
     }
@@ -138,18 +155,20 @@ class CodesysNvl extends utils.Adapter {
                     // NVLs to send
                     if (gvlItem.aktMinGap > 0) {
                         gvlItem.aktMinGap--;
+                        this.mainTimer = this.setTimeout(this.onMainTimerInterval.bind(this), this.mainTimerInterval);
                         return; // if minGap > 0 sending is blocked
                     }
                     if (gvlItem.dirtyAfterGap) {
                         gvlItem.dirtyAfterGap = false;
-                        this.sendTelegram(Number(gvlItem.ListIdentifier));
+                        this.sendTelegram(Number(gvlItem.listIdentifier));
+                        this.mainTimer = this.setTimeout(this.onMainTimerInterval.bind(this), this.mainTimerInterval);
                         return; // don't process the default sending interval
                     }
                     if (gvlItem.nextSend > 0) {
                         gvlItem.nextSend--;
                         if (gvlItem.nextSend <= 0) {
-                            this.sendTelegram(Number(gvlItem.ListIdentifier));
-                            gvlItem.nextSend = Math.floor(gvlItem.Interval / this.mainTimerInterval);
+                            this.sendTelegram(Number(gvlItem.listIdentifier));
+                            gvlItem.nextSend = gvlItem.nextSendTicks; // reload next send counter
                         }
                     }
                 }
@@ -159,7 +178,7 @@ class CodesysNvl extends utils.Adapter {
                         gvlItem.aktWatchActive--;
                         if (gvlItem.aktWatchActive === 0) {
                             await this.setStateChangedAsync(
-                                `${this.namespace}.nvl.${gvlItem.ListIdentifier}.info.connection`,
+                                `${this.namespace}.nvl.${gvlItem.listIdentifier}.info.connection`,
                                 false,
                                 true,
                             );
@@ -167,6 +186,7 @@ class CodesysNvl extends utils.Adapter {
                     }
                 }
             }
+            this.mainTimer = this.setTimeout(this.onMainTimerInterval.bind(this), this.mainTimerInterval); // reload Timeout at the end of the routine
         } catch (err) {
             this.errorHandler(err, 'onMainTimerInterval');
         }
@@ -245,7 +265,7 @@ class CodesysNvl extends utils.Adapter {
             let listIdValid = false;
             let gvlItem = {};
             for (const gvlInfo of this.gvlInfo) {
-                if (gvlInfo.ListIdentifier === telegram.listId) {
+                if (gvlInfo.listIdentifier === telegram.listId) {
                     // found listId in config
                     if (gvlInfo.type === 'disabled') {
                         this.log.debug(`ListId: ${telegram.listId} is disabled. Skip it`);
@@ -294,7 +314,7 @@ class CodesysNvl extends utils.Adapter {
                 true,
             );
             await this.setStateChangedAsync(`${this.namespace}.nvl.${telegram.listId}.info.connection`, true, true);
-            gvlItem.aktWatchActive = Math.floor((gvlItem.Interval / this.mainTimerInterval) * 2.5);
+            gvlItem.aktWatchActive = Math.floor((gvlItem.interval / this.mainTimerInterval) * 2.5); // is >= 2.5 times mainTimerInterval
         } catch (err) {
             this.errorHandler(err, 'onServerMessage');
         }
@@ -353,7 +373,7 @@ class CodesysNvl extends utils.Adapter {
      */
     onStateChange(id, state) {
         if (state) {
-            this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+            this.log.debug(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
             if (!state.ack) {
                 // react only to commands
                 const valueArray = id.split('.');
@@ -361,26 +381,6 @@ class CodesysNvl extends utils.Adapter {
                 if (valueArray[2] === 'nvl' && valueArray[6] === 'value') {
                     // only if a value in a nvl has changed
                     this.sendTelegram(Number(valueArray[3]));
-                }
-            }
-        }
-    }
-
-    /**
-     * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
-     * Using this method requires "common.messagebox" property to be set to true in io-package.json
-     *
-     * @param {ioBroker.Message} obj the object that was handed over by js-controller
-     */
-    onMessage(obj) {
-        if (typeof obj === 'object' && obj.message) {
-            if (obj.command === 'send') {
-                // e.g. send email or pushover or whatever
-                this.log.info('send command');
-
-                // Send response in callback if required
-                if (obj.callback) {
-                    this.sendTo(obj.from, obj.command, 'Message received', obj.callback);
                 }
             }
         }
@@ -395,7 +395,7 @@ class CodesysNvl extends utils.Adapter {
         try {
             // Clear main timerinterval
             // @ts-expect-error mainTimer is defined
-            clearInterval(this.mainTimer);
+            clearTimeout(this.mainTimer);
 
             // Reset the connection indicator
             this.setState('info.connection', false, true);
@@ -427,8 +427,7 @@ class CodesysNvl extends utils.Adapter {
                 this.log.error(`sendTelegram: Client not ready. Abort sending for listId: ${listId}`);
                 return;
             }
-            const gvlItem = this.gvlInfo.find(x => x.ListIdentifier === listId);
-            const gvlStructure = gvlItem.gvlStructure;
+            const gvlItem = this.gvlInfo.find(x => x.listIdentifier === listId);
             if (!gvlItem) {
                 this.log.error(`sendTelegram: listId: ${listId} not found`);
                 return;
@@ -445,8 +444,13 @@ class CodesysNvl extends utils.Adapter {
             }
 
             // set new gap
-            gvlItem.aktMinGap = Math.floor(gvlItem.MinGap / this.mainTimerInterval) + 1; // because this interval is mostly short enough
+            gvlItem.aktMinGap =
+                Math.floor(gvlItem.minGap / this.mainTimerInterval) < this.mainTimerInterval
+                    ? this.mainTimerInterval + 1
+                    : Math.floor(gvlItem.minGap / this.mainTimerInterval); // because this interval is mostly short enough
 
+            // now it should be safe to use the gvlItem because it exists
+            const gvlStructure = gvlItem.gvlStructure;
             const varSize = Object.keys(gvlStructure.children).length;
             const nvl = iec.fromString(gvlItem.nvlDef, 'NVL');
             const data = nvl.getDefault() || {};
@@ -509,7 +513,7 @@ class CodesysNvl extends utils.Adapter {
             header.writeUInt16LE(gvlStructure.byteLength + 20, 14); // Total length of telegram (header+data)
             header.writeUInt16LE(gvlItem.teleCounter, 16); // Send counter
 
-            //Increment counter for next itteration
+            // Increment counter for next iteration
             gvlItem.teleCounter += 1;
             if (gvlItem.teleCounter > 65535) {
                 gvlItem.teleCounter = 0;
@@ -577,12 +581,14 @@ class CodesysNvl extends utils.Adapter {
                             this.log.info(`File: ${fileName} is unchanged. Skip this file`);
                             this.gvlInfo.push(configEntry); // remember unchanged file item, no configDirty for now
                             // @ts-expect-error works in real life
-                            this.idsToCreate[configEntry.ListIdentifier] = {
+                            this.idsToCreate[configEntry.listIdentifier] = {
                                 // @ts-expect-error works in real life
                                 fileName: configEntry.fileName,
                                 isDirty: false,
                             };
                             continue;
+                        } else {
+                            configEntry = {}; // reset configEntry if reloading the file
                         }
                     } else {
                         configEntry = {};
@@ -607,48 +613,48 @@ class CodesysNvl extends utils.Adapter {
                     this.idsToCreate[localListId] = { fileName: fileName, isDirty: true }; // remember fileName for comparison and set this listId dirty for db creation
                     // now parse the content
                     configEntry.fileName = fileName;
-                    configEntry.ListIdentifier = localListId;
+                    configEntry.listIdentifier = localListId;
                     configEntry.type = 'disabled'; // if a new or changed file then disable the list in config
-                    configEntry.Pack = true;
-                    configEntry.Checksum =
+                    configEntry.pack = true;
+                    configEntry.checksum =
                         gvlFileXML.GVL.NetvarSettings.Checksum !== undefined
                             ? gvlFileXML.GVL.NetvarSettings.Checksum === 'True'
                                 ? true
                                 : false
                             : false;
-                    configEntry.Acknowledge =
+                    configEntry.acknowledge =
                         gvlFileXML.GVL.NetvarSettings.Acknowledge !== undefined
                             ? gvlFileXML.GVL.NetvarSettings.Acknowledge === 'True'
                                 ? true
                                 : false
                             : false;
-                    configEntry.CyclicTransmission =
+                    configEntry.cyclicTransmission =
                         gvlFileXML.GVL.NetvarSettings.CyclicTransmission !== undefined
                             ? gvlFileXML.GVL.NetvarSettings.CyclicTransmission === 'True'
                                 ? true
                                 : false
                             : false;
-                    configEntry.TransmissionOnChange =
+                    configEntry.transmissionOnChange =
                         gvlFileXML.GVL.NetvarSettings.TransmissionOnChange !== undefined
                             ? gvlFileXML.GVL.NetvarSettings.TransmissionOnChange === 'True'
                                 ? true
                                 : false
                             : false;
-                    configEntry.TransmissionOnEvent =
+                    configEntry.transmissionOnEvent =
                         gvlFileXML.GVL.NetvarSettings.TransmissionOnEvent !== undefined
                             ? gvlFileXML.GVL.NetvarSettings.TransmissionOnEvent === 'True'
                                 ? true
                                 : false
                             : false;
-                    configEntry.Interval =
+                    configEntry.interval =
                         gvlFileXML.GVL.NetvarSettings.Interval !== undefined
                             ? this.convertTimeString(gvlFileXML.GVL.NetvarSettings.Interval)
                             : 1000;
-                    configEntry.MinGap =
+                    configEntry.minGap =
                         gvlFileXML.GVL.NetvarSettings.MinGap !== undefined
                             ? this.convertTimeString(gvlFileXML.GVL.NetvarSettings.MinGap)
                             : 100;
-                    configEntry.EventVariable =
+                    configEntry.eventVariable =
                         gvlFileXML.GVL.NetvarSettings.EventVariables !== undefined
                             ? gvlFileXML.GVL.NetvarSettings.EventVariables
                             : [];
@@ -726,7 +732,7 @@ class CodesysNvl extends utils.Adapter {
                 locObj.common.name = this.idsToCreate[key].fileName;
                 await this.extendObject(`nvl.${locObj._id}`, locObj);
                 // now create the variable lists
-                const gvlStructure = this.gvlInfo.find(x => x.ListIdentifier == key).gvlStructure;
+                const gvlStructure = this.gvlInfo.find(x => x.listIdentifier == key).gvlStructure;
                 for (const element of this.objectsTemplates.nvls) {
                     await this.extendObject(`nvl.${key}.${element._id}`, element);
                     if (element._id !== 'var') {
@@ -750,7 +756,7 @@ class CodesysNvl extends utils.Adapter {
                                 case 'STRING':
                                 case 'WSTRING':
                                 case 'INT':
-                                    this.createChannelTypeVar(
+                                    await this.createChannelTypeVar(
                                         Number(key),
                                         actVarName,
                                         gvlStructure.children[actVarName].type,
@@ -933,6 +939,17 @@ class CodesysNvl extends utils.Adapter {
     errorHandler(err, module = '') {
         this.log.error(`Codesys-NVL error in method: [${module}] error: ${err.message}, stack: ${err.stack}`);
     }
+
+    /**
+     * for sanitizing variable names before use as database id
+     * replace all forbidden characters (.*?[ ]"') with a undescore
+     *
+     * @param {string} inputString string to be sanitized
+     */
+    cleanId(inputString) {
+        return inputString.replace(/[\][*,;'"`<>\\?]/g, '_');
+    }
+
     /* #endregion */
 }
 

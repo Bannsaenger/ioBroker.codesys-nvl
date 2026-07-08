@@ -76,14 +76,14 @@
       "codesys nvl plc iec-61131-3"
     ],
     "licenseInformation": {
-      "link": "https://github.com/Bannsaenger/ioBroker.extron/blob/master/LICENSE",
+      "link": "https://github.com/Bannsaenger/ioBroker.codesys-nvl/blob/main/LICENSE",
       "type": "free",
       "license": "MIT"
     },
     "platform": "Javascript/Node.js",
     "icon": "codesys-nvl.png",
     "enabled": true,
-    "messagebox": true,
+    "messagebox": false,
     "extIcon": "https://raw.githubusercontent.com/Bannsaenger/ioBroker.codesys-nvl/main/admin/codesys-nvl.png",
     "readme": "https://github.com/Bannsaenger/ioBroker.codesys-nvl/blob/main/README.md",
     "loglevel": "info",
@@ -112,6 +112,7 @@
     "port": 1202,
     "bind": "0.0.0.0",
     "mainTimerInterval": 10,
+    "teleDelay": 0,
     "gvlInfo": []
   },
   "objects": [],
