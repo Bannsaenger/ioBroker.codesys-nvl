@@ -95,8 +95,7 @@ In a **send** list you can set the values in the database to transmit the data t
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.0.5 (2026-08-25)
 - (ioBroker-Bot) Adapter requires admin >= 7.8.23 now.
 - (Bannsaenger) fixed errors from code review for check in to latest repository
 
