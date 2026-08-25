@@ -62,7 +62,6 @@ class CodesysNvl extends utils.Adapter {
         this.configurationOk = true;
         this.gvlInfo = []; // part of this.config to extend the configuration object after gvl file loading
         this.mainTimerInterval = 0; // from config
-        this.teleDelay = this.config.teleDelay || 0; // timeto wait for a multi-part telegram to complete (reserverd for future use)
         this.idsToCreate = {}; // all list ids which have to be created. If id extists in db then delete before creation
         this.clientReady = false; // true if data can be sent via the broadcast client connection
 
@@ -119,17 +118,17 @@ class CodesysNvl extends utils.Adapter {
             for (const gvlInfoConf of this.config.gvlInfo) {
                 /** @type {gvlInfo} */
                 const gvlInfo = gvlInfoConf;
+                // guard interval or all list types, even if ti will be used or not
+                if (gvlInfo.interval) {
+                    gvlInfo.interval = Math.max(gvlInfo.interval, this.mainTimerInterval);
+                } else {
+                    gvlInfo.interval = this.mainTimerInterval;
+                }
                 if (gvlInfo.type === 'disabled') {
                     continue;
                 } // skip disabled NVLs
                 if (gvlInfo.type === 'send') {
                     gvlInfo.nextSend = Math.floor(Math.random() * 10); // for the first telegram sending
-                    // guard interval
-                    if (gvlInfo.interval) {
-                        gvlInfo.interval = Math.max(gvlInfo.interval, this.mainTimerInterval);
-                    } else {
-                        gvlInfo.interval = this.mainTimerInterval;
-                    }
                     gvlInfo.nextSendTicks = Math.floor(gvlInfo.interval / this.mainTimerInterval); // guarded before
                 }
                 // gvlInfo.aktMinGap = Math.floor(gvlInfo.minGap / this.mainTimerInterval) + 1;	// because this interval is mostly short enough
@@ -314,7 +313,7 @@ class CodesysNvl extends utils.Adapter {
                 true,
             );
             await this.setStateChangedAsync(`${this.namespace}.nvl.${telegram.listId}.info.connection`, true, true);
-            gvlItem.aktWatchActive = Math.floor((gvlItem.interval / this.mainTimerInterval) * 2.5); // is >= 2.5 times mainTimerInterval
+            gvlItem.aktWatchActive = Math.floor((gvlItem.interval / this.mainTimerInterval) * 2.5); // is >= 2.5 times
         } catch (err) {
             this.errorHandler(err, 'onServerMessage');
         }
@@ -751,21 +750,22 @@ class CodesysNvl extends utils.Adapter {
                         // and now populate the var part
                         for (const actVarName in gvlStructure.children) {
                             //this.log.debug(`actVarName: ${actVarName}`);
-                            switch (gvlStructure.children[actVarName].type) {
+                            const cleanVarName = this.cleanId(actVarName);
+                            switch (gvlStructure.children[cleanVarName].type) {
                                 case 'BOOL':
                                 case 'STRING':
                                 case 'WSTRING':
                                 case 'INT':
                                     await this.createChannelTypeVar(
                                         Number(key),
-                                        actVarName,
-                                        gvlStructure.children[actVarName].type,
+                                        cleanVarName,
+                                        gvlStructure.children[cleanVarName].type,
                                     );
                                     break;
 
                                 default:
                                     this.log.error(
-                                        `Variable type: ${gvlStructure.children[actVarName].type} not supported for now. Sorry. Giving up ...`,
+                                        `Variable type: ${gvlStructure.children[cleanVarName].type} not supported for now. Sorry. Giving up ...`,
                                     );
                                     this.configurationOk = false;
                                     return;
@@ -838,14 +838,15 @@ class CodesysNvl extends utils.Adapter {
      */
     async createChannelTypeVar(listId = 0, varName = '', varType = 'BOOL') {
         try {
+            const cleanVarName = this.cleanId(varName);
             if (this.objectsTemplates[varType] === undefined) {
                 this.log.error(`unknown variable type: ${varType}. Giving up`);
                 this.configurationOk = false;
                 return;
             }
-            await this.extendObject(`nvl.${listId}.var.${varName}`, this.objectsTemplates.channel);
+            await this.extendObject(`nvl.${listId}.var.${cleanVarName}`, this.objectsTemplates.channel);
             for (const element of this.objectsTemplates[varType]) {
-                await this.extendObject(`nvl.${listId}.var.${varName}.${element._id}`, element);
+                await this.extendObject(`nvl.${listId}.var.${cleanVarName}.${element._id}`, element);
             }
         } catch (err) {
             this.configurationOk = false;
@@ -947,7 +948,7 @@ class CodesysNvl extends utils.Adapter {
      * @param {string} inputString string to be sanitized
      */
     cleanId(inputString) {
-        return inputString.replace(/[\][*,;'"`<>\\?]/g, '_');
+        return inputString.replace(/[\][*,;'"`<>\\?]\. /g, '_');
     }
 
     /* #endregion */

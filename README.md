@@ -98,6 +98,7 @@ In a **send** list you can set the values in the database to transmit the data t
 
 ### **WORK IN PROGRESS**
 - (ioBroker-Bot) Adapter requires admin >= 7.8.23 now.
+- (Bannsaenger) fixed errors from code review for check in to latest repository
 
 ### 0.0.4 (2026-07-08)
 - (Bannsaenger) fixed errors from code review for check in to latest repository

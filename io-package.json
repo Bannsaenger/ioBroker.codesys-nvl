@@ -124,7 +124,6 @@
     "port": 1202,
     "bind": "0.0.0.0",
     "mainTimerInterval": 10,
-    "teleDelay": 0,
     "gvlInfo": []
   },
   "objects": [],

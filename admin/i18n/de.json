@@ -8,7 +8,6 @@
     "Transmission On Event": "Übertragung bei Ereignis",
     "bind_help": "IP-Adresse, an die der Port gebunden werden soll",
     "bind_label": "IP",
-    "codesys-nvl adapter settings": "Adaptereinstellungen für codesys-nvl",
     "interval between cyclic transmissions": "Intervall zwischen zyklischen Übertragungen",
     "mainTimerInterval_help": "Auflösung aller timerbasierten zyklischen Übertragungen und minimale Lückenverzögerungen (in ms)",
     "mainTimerInterval_label": "Haupt-Timer-Intervall",
@@ -16,7 +15,5 @@
     "nvl": "Netzwerkvariablenlisten",
     "options": "Optionen",
     "port_help": "Auf diesem UDP-Port hören",
-    "port_label": "Port",
-    "teleDelay_help": "Wenn ein Telegramm mit SubIDs in Teile unterteilt ist, warten Sie x Timer-Zyklen, bevor Sie die Werte an die Datenbank übergeben. 0 = jedes Mal passieren, wenn ein Telegrammteil empfangen wird",
-    "teleDelay_label": "Warten Sie, bis das Telegramm abgeschlossen ist"
+    "port_label": "Port"
 }
