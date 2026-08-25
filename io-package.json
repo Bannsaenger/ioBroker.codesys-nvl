@@ -89,7 +89,6 @@
       "codesys nvl plc iec-61131-3"
     ],
     "licenseInformation": {
-      "link": "https://github.com/Bannsaenger/ioBroker.codesys-nvl/blob/main/LICENSE",
       "type": "free",
       "license": "MIT"
     },
