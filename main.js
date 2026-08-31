@@ -757,7 +757,7 @@ class CodesysNvl extends utils.Adapter {
                                     await this.createChannelTypeVar(
                                         Number(key),
                                         cleanVarName,
-                                        gvlStructure.children[cleanVarName].type,
+                                        gvlStructure.children[actVarName].type,
                                     );
                                     break;
 
@@ -836,15 +836,14 @@ class CodesysNvl extends utils.Adapter {
      */
     async createChannelTypeVar(listId = 0, varName = '', varType = 'BOOL') {
         try {
-            const cleanVarName = this.cleanId(varName);
             if (this.objectsTemplates[varType] === undefined) {
                 this.log.error(`unknown variable type: ${varType}. Giving up`);
                 this.configurationOk = false;
                 return;
             }
-            await this.extendObject(`nvl.${listId}.var.${cleanVarName}`, this.objectsTemplates.channel);
+            await this.extendObject(`nvl.${listId}.var.${varName}`, this.objectsTemplates.channel);
             for (const element of this.objectsTemplates[varType]) {
-                await this.extendObject(`nvl.${listId}.var.${cleanVarName}.${element._id}`, element);
+                await this.extendObject(`nvl.${listId}.var.${varName}.${element._id}`, element);
             }
         } catch (err) {
             this.configurationOk = false;
