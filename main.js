@@ -948,7 +948,7 @@ class CodesysNvl extends utils.Adapter {
      * @param {string} inputString string to be sanitized
      */
     cleanId(inputString) {
-        return inputString.replace(/[\][*,;'"`<>\\?]\. /g, '_');
+        return inputString.replace(/[\][*,;'"`<>\\?.\s]/g, '_');
     }
 
     /* #endregion */
