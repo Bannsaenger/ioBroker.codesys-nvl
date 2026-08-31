@@ -80,7 +80,7 @@ codesys-nvl.0.nvl.1
 ```
 Under **config** you find the imported GVL content. The **info** channel gives information about the connection state and the data actuality.
 
-Uner **var** you find the variable names as channel and in the channel the **type** and the **value**.
+Under **var** you find the variable names as channel and in the channel the **type** and the **value**.
 
 In a **send** list you can set the values in the database to transmit the data to the PLC. On the other sind you see the received values from a **receive** list.
 
