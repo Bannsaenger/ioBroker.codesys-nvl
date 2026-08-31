@@ -53,8 +53,8 @@
 			"_id": "connection",
 			"type": "state",
 			"common": {
-				"role": "indicator.connected",
-				"name": "indicates that nvl is received. Goes to false if nvl ist configured to be sent periodically and is not seen for n times cyclicTransmissionInterval.",
+				"role": "indicator.reachable",
+				"name": "indicates that nvl is received. Goes to false if nvl is configured to be sent periodically and is not seen for n times cyclicTransmissionInterval.",
 				"type": "boolean",
 				"read": true,
 				"write": false,
