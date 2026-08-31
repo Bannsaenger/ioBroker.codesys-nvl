@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "codesys-nvl",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "news": {
+      "0.0.6": {
+        "en": "fixed last errors from code review",
+        "de": "Die letzten Fehler aus der Codeüberprüfung wurden behoben.",
+        "ru": "Исправлены последние ошибки, выявленные в ходе проверки кода.",
+        "pt": "Corrigidos os últimos erros identificados na revisão de código.",
+        "nl": "De laatste fouten uit de codereview zijn gecorrigeerd.",
+        "fr": "Correction des dernières erreurs issues de la revue de code",
+        "it": "Risolti gli ultimi errori derivanti dalla revisione del codice.",
+        "es": "Se corrigieron los últimos errores de la revisión del código.",
+        "pl": "naprawiono ostatnie błędy z przeglądu kodu",
+        "uk": "виправлено останні помилки з перевірки коду",
+        "zh-cn": "修复了代码审查中发现的最后几个错误"
+      },
       "0.0.5": {
         "en": "Adapter requires admin >= 7.8.23 now.\nfixed errors from code review for check in to latest repository",
         "de": "Der Adapter benötigt jetzt Administratorrechte ab Version 7.8.23.\nFehler aus der Codeüberprüfung für den Check-in in das neueste Repository behoben",

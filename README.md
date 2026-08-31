@@ -95,7 +95,7 @@ In a **send** list you can set the values in the database to transmit the data t
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.0.6 (2026-08-31)
 - (Bannsaenger) fixed last errors from code review
 
 ### 0.0.5 (2026-08-25)
@@ -110,9 +110,6 @@ In a **send** list you can set the values in the database to transmit the data t
 
 ### 0.0.2 (2026-05-15)
 - (Bannsaenger) add initial documentation
-
-### 0.0.1 (2026-05-14)
-- (Bannsaenger) initial release
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 
