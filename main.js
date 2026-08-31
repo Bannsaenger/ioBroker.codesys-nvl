@@ -55,8 +55,6 @@ class CodesysNvl extends utils.Adapter {
 
         // read Objects template for object generation
         this.objectsTemplates = JSON.parse(fs.readFileSync(`${__dirname}/lib/object_templates.json`, 'utf8'));
-        // holds alls data from the gvl files in the directory
-        this.nvlFileBase = {};
 
         // if set to false in initialisation process the adapter will be terminated before the network socket is bound
         this.configurationOk = true;
